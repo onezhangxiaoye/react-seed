@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Route, HashRouter } from 'react-router-dom'
 
-import '../styles/App.css';
-import '../styles/index.css';
+import '../styles/app.styl';
+import '../styles/index.styl';
 import Header from '../components/Header';
 import Catalog from '../components/Catalog';
 import Content from '../components/Content';
