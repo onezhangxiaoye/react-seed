@@ -210,6 +210,14 @@ module.exports = {
             },
           },
           // Process application JS with Babel.
+          {
+            test: /\.styl$/,
+            use: [
+                require.resolve('style-loader'),
+                require.resolve('css-loader'),
+                require.resolve('stylus-loader')
+            ]
+        },
           // The preset includes JSX, Flow, and some ESnext features.
           {
             test: /\.(js|mjs|jsx|ts|tsx)$/,
