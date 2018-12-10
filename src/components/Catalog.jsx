@@ -15,7 +15,13 @@ class Catalog extends Component{
                             <NavLink to="/Content">首页</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/Test">测试页面</NavLink>
+                            <NavLink to="/Test">加密测算页面</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/Test1">测试页面</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/DataList">数据表页面</NavLink>
                         </li>
                     </ul>
                 </HashRouter>
