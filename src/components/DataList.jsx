@@ -1,6 +1,6 @@
 /*  组件 */
 import React, { Component } from 'react';
-import { axiosPost } from '../utils/requestApi';
+import { axiosPost } from '../utils/js/requestApi';
 
 class Catalog extends Component{
 
@@ -11,6 +11,8 @@ class Catalog extends Component{
         }
     }
 
+    
+
    /**
    * 可以通过 componentDidMount 方法中的 Ajax 来获取，当从服务端获取数据时可以将数据存储在 state 中，再用 this.setState 方法重新渲染 UI
    */
@@ -18,9 +20,9 @@ class Catalog extends Component{
       this.serverRequest = axiosPost('MyController/selectAllData', { id: 40 }).then(result => {
         // console.log(result);
         let arr = [];
-        result.data.forEach((data) => {
+        result.data.forEach((data,index) => {
             arr.push(
-                <tr>
+                <tr key={'tr_' + index}>
                     <td>{data.id}</td>
                     <td>{data.name}</td>
                     <td>{data.password}</td>

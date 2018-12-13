@@ -283,6 +283,14 @@ module.exports = {
             },
           },
           // Process application JS with Babel.
+          {
+            test: /\.styl$/,
+            use: [
+                require.resolve('style-loader'),
+                require.resolve('css-loader'),
+                require.resolve('stylus-loader')
+            ]
+          },
           // The preset includes JSX, Flow, TypeScript and some ESnext features.
           {
             test: /\.(js|mjs|jsx|ts|tsx)$/,
@@ -403,6 +411,11 @@ module.exports = {
               'sass-loader'
             ),
           },
+          //增加下面配置项 用于支持stylus
+          { 
+            test: /\.styl$/, 
+            loaders: ['style-loader', 'css-loader', 'stylus-loader'], 
+          },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
           // This loader doesn't use a "test" so it will catch all modules
@@ -413,7 +426,9 @@ module.exports = {
             // it's runtime that would otherwise be processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+            
+            //增加参数   /\.styl$/ 
+            exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/,/\.styl$/],
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
             },

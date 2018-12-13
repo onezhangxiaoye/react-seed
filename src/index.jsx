@@ -1,4 +1,4 @@
-import App from './utils/App';
+import App from './components/App';
 import React from 'react';
 import ReactDOM from 'react-dom';
 

@@ -8,7 +8,7 @@ import querystring from 'querystring';
  * 
  */
 var _axios = axios.create({
-    baseURL: " http://192.168.26.1:8123/",
+    baseURL: " http://www.zhangxiaoye.top:8123/",
     timeout:1000,
     headers: {'content-type': 'application/x-www-form-urlencoded'}
   });

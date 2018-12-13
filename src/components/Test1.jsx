@@ -1,4 +1,4 @@
-/* 头部组件 */
+/* Scroll滚动测试组件 */
 import React, { Component } from 'react';
 
 class Test1 extends Component{

@@ -3,13 +3,14 @@ import { Route, HashRouter } from 'react-router-dom'
 
 import '../styles/app.styl';
 import '../styles/index.styl';
-import Header from '../components/Header';
-import Catalog from '../components/Catalog';
-import Content from '../components/Content';
-import Gallery from '../components/Gallery';
-import Test from '../components/Test';
-import Test1 from '../components/Test1';
-import DataList from '../components/DataList';
+import Header from './Header';
+import Catalog from './Catalog';
+import Content from './Content';
+import Gallery from './Gallery';
+import Test from './Test';
+import Test1 from './Test1';
+import DataList from './DataList';
+import Test3 from './Test3';
 
 
 class App extends Component {
@@ -26,6 +27,7 @@ class App extends Component {
               <Route path="/Test" component={Test} key='Test'></Route>
               <Route path="/Test1" component={Test1} key='Test1'></Route>
               <Route path="/DataList" component={DataList} key='DataList'></Route>
+              <Route path="/Test3" component={Test3} key='Test3'></Route>
             </div>
           </HashRouter>
         </div>
