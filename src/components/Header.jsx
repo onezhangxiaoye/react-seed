@@ -34,10 +34,10 @@ class Header extends Component{
         this.setState({
             time:year + '年' +
             (month + 1) + '月' +
-            date + '日  ' +
-            hours + ':' +
-            minutes + ':' +
-            seconds + '   星期' + this.getWeek(week)
+            (date < 10 ? '0'+date : date) + '日  ' +
+            (hours < 10 ? '0'+hours : hours) + ':' +
+            (minutes < 10 ? '0'+minutes : minutes) + ':' +
+            (seconds < 10 ? '0'+seconds : seconds) + '   星期' + this.getWeek(week)
         })
     }
 

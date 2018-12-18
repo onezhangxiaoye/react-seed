@@ -21,10 +21,11 @@ class Catalog extends Component{
         const navLinkList = [
             { to: '/', name: '画廊', exact: true, click: false,showChild:false},
             {to:'/Content',name:'首页',exact:false,click: false,showChild:false},
-            {to:'/Test',name:'加密测算页面',exact:false,click: false,showChild:false},
+            {to:'/Test',name:'加密测试',exact:false,click: false,showChild:false},
             {to:'/Test1',name:'Scroll滚动测试',exact:false,click: false,showChild:false},
-            {to:'/DataList',name:'数据表页面',exact:false,click: false,showChild:false},
-            {to:'/Test3',name:'全局组件测试页面',exact:false,click: false,showChild:false}
+            {to:'/DataList',name:'请求数据表',exact:false,click: false,showChild:false},
+            {to:'/Test3',name:'全局组件测试',exact:false,click: false,showChild:false},
+            {to:'/ImgDataList',name:'图片数据',exact:false,click: false,showChild:false},
         ]
         this.setState({
             navLinkListData:navLinkList

@@ -49,6 +49,6 @@ export default {
 
         setTimeout(() => {
             ReactDOM.unmountComponentAtNode(div)
-        },3000);
+        },2200);
     }
 }

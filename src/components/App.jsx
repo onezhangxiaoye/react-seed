@@ -11,6 +11,7 @@ import Test from './Test';
 import Test1 from './Test1';
 import DataList from './DataList';
 import Test3 from './Test3';
+import ImgDataList from './ImgDataList';
 
 
 class App extends Component {
@@ -28,6 +29,7 @@ class App extends Component {
               <Route path="/Test1" component={Test1} key='Test1'></Route>
               <Route path="/DataList" component={DataList} key='DataList'></Route>
               <Route path="/Test3" component={Test3} key='Test3'></Route>
+              <Route path="/ImgDataList" component={ImgDataList} key='ImgDataList'></Route>
             </div>
           </HashRouter>
         </div>

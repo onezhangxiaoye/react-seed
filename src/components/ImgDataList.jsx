@@ -2,7 +2,10 @@
 import React, { Component } from 'react';
 import { axiosPost } from '../utils/js/requestApi';
 
-class DataList extends Component{
+const _imgPath = 'http://192.168.1.158:9000/img/';
+// const _imgPath = 'http://www.zhangxiaoye.top:9000/img/imgData/';
+
+class ImgDataList extends Component{
 
     constructor() {
         super();
@@ -17,17 +20,18 @@ class DataList extends Component{
    * 可以通过 componentDidMount 方法中的 Ajax 来获取，当从服务端获取数据时可以将数据存储在 state 中，再用 this.setState 方法重新渲染 UI
    */
   componentDidMount() {
-      this.serverRequest = axiosPost('MyController/selectAllData', { id: 40,name:123 }).then(result => {
+      this.serverRequest = axiosPost('MyController/selectAllImg', { id: 40 }).then(result => {
         // console.log(result);
         let arr = [];
         result.data.forEach((data,index) => {
             arr.push(
                 <tr key={'tr_' + index}>
                     <td>{data.id}</td>
-                    <td>{data.name}</td>
-                    <td>{data.password}</td>
-                    <td>{data.group_id}</td>
-                    <td>{data.pic_name}</td>
+                    <td>{data.imgName}</td>
+                    <td>{data.introduce}</td>
+                    <td>{data.imgPath}</td>
+                    <td>{data.comment}</td>
+                    <td><img src={_imgPath + data.imgPath} alt=""/></td>
                 </tr>
             )
             
@@ -41,16 +45,17 @@ class DataList extends Component{
 
     render() {
         return (
-            <div className="data-list">
+            <div className="img-data-list">
 
                 <table>
                     <thead>
                         <tr>
                             <td>ID</td>
-                            <td>用户名</td>
-                            <td>密码</td>
-                            <td>分组ID</td>
+                            <td>图片名称</td>
+                            <td>图片介绍</td>
                             <td>图片路径</td>
+                            <td>评论</td>
+                            <td>图片</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,4 +68,4 @@ class DataList extends Component{
     }
 }
 
-export default DataList;
+export default ImgDataList;
