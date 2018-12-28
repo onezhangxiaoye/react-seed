@@ -93,6 +93,7 @@ class Catalog extends Component{
             navLinkListData: navLinkListData,
             navLinkClick:_index
         })
+        this.props.routeChange(_index)
     }
 
     render() {

@@ -98,7 +98,7 @@ class Test3 extends Component{
                     onClick={this.loadingTest}
                 ></XbcBtn>
                 <Test4 value={this.state.testValue}></Test4>
-                <Test5 type="test3">
+                <Test5 xbcKey={this.state.testText} >
                     <p>{this.state.testText}</p>
                 </Test5>
             </div>

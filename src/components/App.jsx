@@ -18,15 +18,34 @@ import XbcLoadingAnimaion from '../utils/components/xbcLoadingAnimaion/XbcLoadin
 
 class App extends Component {
 
+  constructor() {
+    super();
+    this.state = {
+      xbcKey:0
+    }
+    this.routeChange = this.routeChange.bind(this);
+  }
+
+  /**监控子组件参数修改的的方法
+   * 
+   * @param {Number} e 
+   */
+  routeChange(e) {
+    this.setState({
+      xbcKey:e
+    })
+    
+  }
+
   render() {
     return (
       <div className="App">
         <Header></Header>
         <div className="App-body">
-          <Catalog></Catalog>
+          <Catalog routeChange={this.routeChange}></Catalog>
           <HashRouter>
-            <XbcLoadingAnimaion>
-              <Route exact path="/" component={Content} key='Content'></Route>
+            <XbcLoadingAnimaion xbcKey={this.state.xbcKey}>
+              <Route  exact path="/" component={Content} key='Content' ></Route>
               <Route path="/Gallery" component={Gallery} key='Gallery'></Route>
               <Route path="/Test" component={Test} key='Test'></Route>
               <Route path="/Test1" component={Test1} key='Test1'></Route>

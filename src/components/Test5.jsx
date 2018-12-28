@@ -11,79 +11,50 @@ class Testf extends Component{
             fprops: [],
             //当前切换动画是否正在执行
             animationing: false,
-            initClass:this.initClass
+            xbcKey:-1
         }
-        this.initClass = this.initClass.bind(this);
     }
 
-    // componentDidMount() {
-    //     this.testFunc();
-    //     const initClass = this.initClass;
-    //     this.setState({
-    //         initClass:initClass
-    //     })
-    // }
-
-    testFunc() {
-        console.log('testFunc----testFunc-----------testFunc');
+    checkClass() {
+        if (this.props.xbcKey !== this.state.xbcKey) {
+            setTimeout(() => {
+                this.setState({
+                    testfClass: 'testf testf-right0',
+                    animationing: false
+                })
+            }, 1500);
+            setTimeout(() => {
+                this.setState({
+                    fprops: this.props.children,
+                    xbcKey:this.props.xbcKey
+                })
+            }, 700);
+        }
     }
 
-    initClass() {
-        console.log('initClass==initClass======initClass');
-        let _this = this;
-        setTimeout(() => {
-            _this.setState({
-                testfClass: 'testf testf-right0',
-                animationing:false
-            })
-        }, 1500);
+    componentDidUpdate() {
+        this.checkClass();
     }
 
+    componentDidMount() {
+        this.checkClass();
+    }
 
     static getDerivedStateFromProps(props,state) {
-        console.log('props修改', props,state);
-        // return {
-        //     testfClass: 'testf testf-right0 changeAnimation',
-        //     animationing: true,
-        //     fprops: props.children
-        // };
-
-        if (!state.animationing) {
-            state.initClass();
-            return {
-                testfClass: 'testf testf-right0 changeAnimation',
-                animationing:true
-            }
-        } else {
-            state.initClass();
-            return {
-                fprops: props.children
+        if (props.xbcKey !== state.xbcKey) {
+            if (!state.animationing) {
+                return {
+                    testfClass: 'testf testf-right0 changeAnimation',
+                    animationing: true,
+                }
+            } else {
+                return {
+                    fprops: props.children,
+                    xbcKey:props.xbcKey
+                }
             }
         }
 
-        // if (!this.state.animationing) {
-        //     this.setState({
-        //         testfClass: 'testf testf-right0 changeAnimation',
-        //         animationing:true
-        //     })
-        //     setTimeout(() => {
-        //         this.setState({
-        //             fprops: props.children
-        //         })
-        //         setTimeout(() => {
-        //             this.setState({
-        //                 testfClass: 'testf testf-right0',
-        //                 animationing:false
-        //             })
-        //         }, 740);
-        //     }, 740);
-        // } else {
-        //     this.setState({
-        //         fprops: props.children
-        //     })
-        // }
-
-        // return null;
     }
 
     render() {
