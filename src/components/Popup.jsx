@@ -1,4 +1,4 @@
-/* 左边导航栏组件 */
+/* 弹出层组件*/
 import React, { Component } from 'react';
 
 class Popup extends Component{

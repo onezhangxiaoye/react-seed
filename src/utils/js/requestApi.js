@@ -1,15 +1,17 @@
 import axios from 'axios'
-import querystring from 'querystring';
+//引入基础数据参数
+import baseData from './baseData';
+//全局加载状态
+import loading from '../components/loading/loading';
+//全体提示内容
+import toast from '../components/toast/toast';
 
 /**
  * 使用自定义配置新建一个 axios 实例
- * http://192.168.1.238:8123/
- * http://www.zhangxiaoye.top:8123/
- * 
  */
 var _axios = axios.create({
-    baseURL: "http://192.168.1.158:8123/",
-    timeout:1000,
+    baseURL: baseData.baseURL,
+    timeout: baseData.timeout,
     // headers: {'content-type': 'multipart/form-data'}
     // headers: {'content-type': 'application/x-www-form-urlencoded'}
 });
@@ -25,6 +27,8 @@ export function axiosPost(url, params) {
         .then(result => {
             resolve(result.data);
         }).catch(error => {
+            loading.hide();
+            toast.show('请求超时');
             reject(error);
         })
     })
@@ -39,7 +43,6 @@ function objToFormData(params) {
     let formData = new FormData();
     for (const key in params) {
         if (params.hasOwnProperty(key)) {
-            console.log(key);
             formData.append(key,params[key]);
         }
     }

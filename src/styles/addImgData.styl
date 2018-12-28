@@ -1,0 +1,82 @@
+.add-img-data
+    form
+        display: flex
+        align-items: center
+        flex-direction: column
+    .xbc-input
+        display: flex
+        align-items: center
+        width: 100%
+        padding: 10px 0
+        .title
+            width: 30%
+            text-align: right 
+            color: rgba(0,0,0,.85)
+            font 
+                color: red
+        .input
+            width: 70%
+            >:first-child
+                float left
+                margin-left: 10px
+                border-radius: 3px
+                border: 1px solid #D9D9D9
+                line-height:  32px
+                width: 50%
+                transition: border-color 0.5s
+                &:hover
+                    border-color:  #40a9ff
+            .fileupload
+                cursor pointer
+                padding: 10px
+                display: flex
+                align-items: center
+                width: 30%
+                line-height:  26px
+                justify-content: space-around
+                transition: color 0.5s,border-color 0.5s
+                &:hover
+                    color: #40a9ff
+                    border-color:  #40a9ff
+                img
+                    width: 25px
+                    path 
+                        fill: #40a9ff
+    .add-img-data-btn
+        width: 300px
+        line-height: 44px
+        background-color: #1890ff
+        color: #fff
+        border-radius: 6px
+        text-align: center
+        cursor pointer
+    .preview
+        width: 45%
+        margin-left: 10px   
+        .preview-li
+            display: flex
+            align-items: center
+            padding: 10px
+            border: 1px dashed #d9d9d9
+            margin-bottom: 10px
+            border-radius: 6px
+            position relative
+            img 
+                width: 80px
+                margin-right: 10px
+            div
+                white-space: nowrap
+                text-overflow:ellipsis
+                overflow: hidden
+            span 
+                position: absolute
+                right 8px
+                top: 0
+                padding: 1px
+                cursor pointer
+                color #d9d9d9
+                transition: color .5s
+                &:hover
+                    color red
+
+            

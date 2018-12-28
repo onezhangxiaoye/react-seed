@@ -5,10 +5,6 @@ import logo from '../assets/logo.svg';
 
 class Content extends Component{
 
-    componentWillMount() {
-        
-    }
-
     render() {
         return (
             <div className="Body-header">
@@ -16,14 +12,6 @@ class Content extends Component{
                 <p>
                 网站建设中。。。。。。。。。
                 </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                Learn React
-                </a>
             </div>
         )
     }

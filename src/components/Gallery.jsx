@@ -1,6 +1,7 @@
 /* 左边导航栏组件 */
 import React, { Component } from 'react';
 import img1 from '../assets/1.png';
+import XbcBtn from '../utils/components/xbcBtn/XbcBtn'
 
 class Gallery extends Component{
 
@@ -9,6 +10,7 @@ class Gallery extends Component{
         this.state = {
             imgArr: []
         }
+        this.moveImg = this.moveImg.bind(this);
     }
 
     componentDidMount() {
@@ -49,7 +51,11 @@ class Gallery extends Component{
         return (
             <div className="Body-header" ref="bodyHeader">
                 {this.state.imgArr}
-                <div  onClick={() => {this.moveImg()}} className="animation-btn">切换切换切换</div>
+                <XbcBtn
+                    content="切换切换切换"
+                    onClick={this.moveImg}
+                    style={{'position':'absolute'}}
+                ></XbcBtn>
             </div>
         )
     }

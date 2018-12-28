@@ -1,9 +1,8 @@
 /*  组件 */
 import React, { Component } from 'react';
 import { axiosPost } from '../utils/js/requestApi';
-
-const _imgPath = 'http://192.168.1.158:9000/img/';
-// const _imgPath = 'http://www.zhangxiaoye.top:9000/img/imgData/';
+//引入基础数据参数
+import baseData from '../utils/js/baseData';
 
 class ImgDataList extends Component{
 
@@ -31,7 +30,7 @@ class ImgDataList extends Component{
                     <td>{data.introduce}</td>
                     <td>{data.imgPath}</td>
                     <td>{data.comment}</td>
-                    <td><img src={_imgPath + data.imgPath} alt=""/></td>
+                    <td><img src={baseData.imgPath + data.imgPath} alt=""/></td>
                 </tr>
             )
             

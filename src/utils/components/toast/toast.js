@@ -43,9 +43,9 @@ class Toast extends Component{
 const div = document.createElement('div');
 
 export default {
-    show() {
+    show(props = '异常错误') {
         document.body.appendChild(div);
-        ReactDOM.render(<Toast title="异常错误" />, div);
+        ReactDOM.render(<Toast title={props} />, div);
 
         setTimeout(() => {
             ReactDOM.unmountComponentAtNode(div)

@@ -1,0 +1,26 @@
+.testf
+    position: absolute
+    padding: 10px
+    background-color: red
+.testf-right0
+    right 0
+.testf-right40
+    right 40
+
+
+.changeAnimation
+    animation: changeAnimation 1.5s
+    
+@keyframes changeAnimation
+    0%
+        right 0
+        opacity 1
+    50%
+        right -40px
+        opacity 0
+    51%
+        right 40px
+        opacity 0
+    100%
+        right 0px
+        opacity 1

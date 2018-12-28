@@ -2,62 +2,105 @@
 import React, { Component } from 'react';
 //全局加载状态
 import loading from '../utils/components/loading/loading';
+//全局加载状态
+import popup from '../utils/components/popup/Popup';
 //全体提示内容
 import toast from '../utils/components/toast/toast';
 //tips
 import Tooltip from '../utils/components/tooltip/tooltip';
-
 import { axiosPost } from '../utils/js/requestApi';
+
+import XbcBtn from '../utils/components/xbcBtn/XbcBtn'
+
+import '../styles/test3.styl';
+import Test5 from './Test5';
+
+
+
+class Test4 extends Component{
+
+    componentDidMount(e) {
+        console.log('子组件测试');
+        
+    }
+
+    render() {
+        console.log(this.props.value,'测试测试');
+        
+        return (<div>{this.props.value}</div>);
+    }
+}
 
 class Test3 extends Component{
 
     constructor(props) {
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.fileInput = React.createRef();
         this.state = {
-            
+            testValue: 1,
+            testText:1
         }
-      }
-      handleSubmit() {
-        const file = document.querySelector('[type=file]');
-        const imgName = document.querySelector('[name=imgName]');
-        const introduce = document.querySelector('[name=introduce]');
-        const comment = document.querySelector('[name=comment]');
+        this.requestTest = this.requestTest.bind(this);
+        this.testXbcBtn = this.testXbcBtn.bind(this);
+        this.loadingTest = this.loadingTest.bind(this);
+    }
 
-          this.serverRequest = axiosPost('FileController/fileUpload', {
-            "file": file.files[0],
-              "imgName": imgName.value,
-              "introduce": introduce.value,
-              "comment": comment.value
+    requestTest() {
+        loading.show();
+        this.serverRequest = axiosPost('MyController/test', {
+            "comment": '白菜'
         }).then(result => {
+            loading.hide();
             console.log(result);
+            toast.show(result.message);
         })
-      }
+    }
+
+    testXbcBtn() {
+        console.log(12412341241);
+        let testValue = this.state.testValue;
+
+        popup.show(
+            <XbcBtn content="测试按钮组件" ></XbcBtn>,
+            {
+                justifyContent: 'flex-end'
+            }
+        );
+        this.setState({
+            testValue:++testValue
+        });
+    }
+
+    loadingTest() {
+        let testText = this.state.testText;
+        this.setState({
+            testText:++testText
+        })
+    }
+
 
     render() {
         return (
             <div className="test3">
-                <button onClick={() => {loading.show()}}>显示加载状态</button>
-                <button onClick={() => {loading.hide()}}>隐藏加载状态</button><br/>
-                <button onClick={() => { toast.show() }}>显示toast信息提示</button><br />
                 <Tooltip title="测试测试">
                     <div>TooltipTooltipTooltipTooltipTooltip</div>
-                </Tooltip><br />
-                <form>
-                    <label>
-                        图片名称:
-                        <input type="text" name="imgName" /><br/><br/>
-                        图片介绍:
-                        <input type="text" name="introduce" /><br/><br/>
-                        评论一下:
-                        <input type="text" name="comment" /><br/><br/>
-                        选择上传的文件:
-                        <input type="file" /><br/>
-                    </label>
-                    <br />
-                    <div onClick={this.handleSubmit}>Submit</div>
-                </form>
+                </Tooltip>
+                <XbcBtn
+                    content="测试访问数据库"
+                    onClick={this.requestTest}
+                ></XbcBtn>
+                <XbcBtn
+                    content="测试按钮组件"
+                    onClick={this.testXbcBtn}
+                ></XbcBtn>
+                <XbcBtn
+                    content="测试进入与离开"
+                    onClick={this.loadingTest}
+                ></XbcBtn>
+                <Test4 value={this.state.testValue}></Test4>
+                <Test5 type="test3">
+                    <p>{this.state.testText}</p>
+                </Test5>
             </div>
         )
     }
