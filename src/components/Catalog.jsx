@@ -1,6 +1,6 @@
 /* 左边导航栏组件 */
 import React, { Component } from 'react';
-import { NavLink, HashRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
 
@@ -19,14 +19,14 @@ class Catalog extends Component{
      */
     componentWillMount() {
         const navLinkList = [
-            {to:'/',name:'首页',exact:false,click: false,showChild:false},
-            {to:'/Gallery', name: '画廊', exact: true, click: false,showChild:false},
-            {to:'/Test',name:'加密测试',exact:false,click: false,showChild:false},
-            {to:'/Test1',name:'Scroll滚动测试',exact:false,click: false,showChild:false},
-            {to:'/DataList',name:'请求数据表',exact:false,click: false,showChild:false},
-            {to:'/Test3',name:'全局组件测试',exact:false,click: false,showChild:false},
-            {to:'/ImgDataList',name:'图片数据',exact:false,click: false,showChild:false},
-            {to:'/AddImgData',name:'添加图片数据',exact:false,click: false,showChild:false},
+            {to:'/app/content',name:'首页',exact:false,click: false,showChild:false},
+            {to:'/app/gallery', name: '画廊', exact: true, click: false,showChild:false},
+            {to:'/app/test',name:'加密测试',exact:false,click: false,showChild:false},
+            {to:'/app/test1',name:'Scroll滚动测试',exact:false,click: false,showChild:false},
+            {to:'/app/dataList',name:'请求数据表',exact:false,click: false,showChild:false},
+            {to:'/app/test3',name:'全局组件测试',exact:false,click: false,showChild:false},
+            {to:'/app/imgDataList',name:'图片数据',exact:false,click: false,showChild:false},
+            {to:'/app/addImgData',name:'添加图片数据',exact:false,click: false,showChild:false},
         ]
         this.setState({
             navLinkListData:navLinkList
@@ -45,10 +45,9 @@ class Catalog extends Component{
                         onClick={() => this.openCatalogChildUl(index)}
                         style={props[index].click ? {transition:'none'} : {}}
                     >
-                        <NavLink
-                            exact={props[index].exact}
-                            to={props[index].to}
-                        >{ props[index].name}</NavLink>
+                        <Link to={props[index].to}>
+                            {props[index].name}
+                        </Link>
                     </li>
                     <div className={props[index].showChild ? 'li-div li-div2' : 'li-div li-div1'}>
                         { props[index].showChild && this.creatCatalogChildUl()}
@@ -99,11 +98,9 @@ class Catalog extends Component{
     render() {
         return (
             <div className="App-catalog">
-                <HashRouter>
-                    <ul className="catalog-ul">
-                       {this.catalogUl(this.state.navLinkListData)}
-                    </ul>
-                </HashRouter>
+                <ul className="catalog-ul">
+                    {this.catalogUl(this.state.navLinkListData)}
+                </ul>
             </div>
         )
     }

@@ -4,8 +4,7 @@
 
 export default {
         //基础请求路径
-        //      http://192.168.1.238:8123/
-        //      http://www.zhangxiaoye.top:8123/
+        // baseURL: 'http://192.168.1.9:8123/',
         baseURL: 'http://www.zhangxiaoye.top:8123/',
         
         //请求超时时间
@@ -16,5 +15,7 @@ export default {
 
         //请求图片的网络 路径
         //      http://192.168.1.158:9000/img/
+        //      http://www.zhangxiaoye.top:9000/img/imgData/'
         imgPath:'http://www.zhangxiaoye.top:9000/img/imgData/',
+        // imgPath:'http://192.168.1.158:9000/img/',
 }

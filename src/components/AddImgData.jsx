@@ -31,7 +31,7 @@ class AddImgData extends Component{
 
     /**输入框 输入时 时时更新参数
      * 
-     * @param {*} event 
+     * @param {Object} event 
      */
     inputChange(event) {
         let param = {};

@@ -8,7 +8,8 @@ class Popup extends Component{
     constructor() {
         super();
         this.state = {
-            popupClass:'popup'
+            popupClass: 'popup',
+            popupScale:'popupScale popupScale0'
         }
         this.close = this.close.bind(this);
     }
@@ -18,7 +19,8 @@ class Popup extends Component{
     componentDidMount() {
         setTimeout(() => {
             this.setState({
-                popupClass:'popup popup-bgcolor'
+                popupClass: 'popup popup-bgcolor',
+                popupScale:'popupScale popupScale1'
             })
         }, 100);
 
@@ -28,7 +30,8 @@ class Popup extends Component{
      */
     close() {
         this.setState({
-            popupClass:'popup'
+            popupClass: 'popup',
+            popupScale:'popupScale popupScale0'
         })
         setTimeout(() => {
             ReactDOM.unmountComponentAtNode(div)
@@ -39,7 +42,9 @@ class Popup extends Component{
     render() {
         return (
             <div style={this.props.style} className={this.state.popupClass} onClick={this.close}>
-                {this.props.dom}
+                <div className={this.state.popupScale}>
+                    {this.props.dom}
+                </div>
             </div>
         )
     }

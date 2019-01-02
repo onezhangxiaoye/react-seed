@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { axiosPost } from '../utils/js/requestApi';
 //引入基础数据参数
 import baseData from '../utils/js/baseData';
+//全局加载状态
+import popup from '../utils/components/popup/Popup';
 
 class ImgDataList extends Component{
 
@@ -11,9 +13,18 @@ class ImgDataList extends Component{
         this.state = {
             dataList:''
         }
+        this.yulanImg = this.yulanImg.bind(this);
     }
 
-    
+
+    yulanImg(src){
+        popup.show(
+            <img style={{ maxWidth: '80%',maxHeight:'90%'}} src={src} alt=""/>,
+            {
+                justifyContent:'center'
+            }
+        );
+    }
 
    /**
    * 可以通过 componentDidMount 方法中的 Ajax 来获取，当从服务端获取数据时可以将数据存储在 state 中，再用 this.setState 方法重新渲染 UI
@@ -30,7 +41,7 @@ class ImgDataList extends Component{
                     <td>{data.introduce}</td>
                     <td>{data.imgPath}</td>
                     <td>{data.comment}</td>
-                    <td><img src={baseData.imgPath + data.imgPath} alt=""/></td>
+                    <td><img onClick={()=>{this.yulanImg(baseData.imgPath + data.imgPath)}} src={baseData.imgPath + data.imgPath} alt=""/></td>
                 </tr>
             )
             

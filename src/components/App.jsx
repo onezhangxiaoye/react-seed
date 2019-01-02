@@ -1,29 +1,30 @@
 import React, { Component } from 'react';
-import { Route, HashRouter } from 'react-router-dom'
+import { Route, BrowserRouter as Router } from 'react-router-dom'
 
 import '../styles/app.styl';
-import '../styles/index.styl';
+import '../styles/base.styl';
 import Header from './Header';
 import Catalog from './Catalog';
-import Content from './Content';
-import Gallery from './Gallery';
-import Test from './Test';
-import Test1 from './Test1';
-import DataList from './DataList';
-import Test3 from './Test3';
-import ImgDataList from './ImgDataList';
-import AddImgData from './AddImgData';
+// import Content from './Content';
+// import Gallery from './Gallery';
+// import Test from './Test';
+// import Test1 from './Test1';
+// import DataList from './DataList';
+// import Test3 from './Test3';
+// import ImgDataList from './ImgDataList';
+// import AddImgData from './AddImgData';
 import XbcLoadingAnimaion from '../utils/components/xbcLoadingAnimaion/XbcLoadingAnimaion';
 
 
 class App extends Component {
 
-  constructor() {
+  constructor({ routes }) {
     super();
     this.state = {
       xbcKey:0
     }
     this.routeChange = this.routeChange.bind(this);
+    this.routes = routes;
   }
 
   /**监控子组件参数修改的的方法
@@ -41,21 +42,21 @@ class App extends Component {
     return (
       <div className="App">
         <Header></Header>
-        <div className="App-body">
-          <Catalog routeChange={this.routeChange}></Catalog>
-          <HashRouter>
+        <Router>
+          <div className="App-body">
+            <Catalog routeChange={this.routeChange}></Catalog>
             <XbcLoadingAnimaion xbcKey={this.state.xbcKey}>
-              <Route  exact path="/" component={Content} key='Content' ></Route>
-              <Route path="/Gallery" component={Gallery} key='Gallery'></Route>
-              <Route path="/Test" component={Test} key='Test'></Route>
-              <Route path="/Test1" component={Test1} key='Test1'></Route>
-              <Route path="/DataList" component={DataList} key='DataList'></Route>
-              <Route path="/Test3" component={Test3} key='Test3'></Route>
-              <Route path="/ImgDataList" component={ImgDataList} key='ImgDataList'></Route>
-              <Route path="/AddImgData" component={AddImgData} key='AddImgData'></Route>
+              {this.routes.map((route, i) => (
+                <Route
+                  path={route.path}
+                  key={i}
+                  render={props => (
+                      <route.component {...props} routes={route.routes} />)}
+                />
+              ))}
             </XbcLoadingAnimaion>
-          </HashRouter>
-        </div>
+          </div>
+        </Router>
       </div>
     );
   }
