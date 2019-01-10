@@ -40,17 +40,30 @@ class XbcLoadingAnimaion extends Component{
         }
     }
     /**
-     * 当组件介绍更新时执行
+     * 当组件更新时执行
      */
     componentDidUpdate() {
-        this.checkClass();
+        
     }
 
     /**
      * 当页面加载完成后执行 只会执行一次
      */
     componentDidMount() {
+        console.log(124124124);
+        
         this.checkClass();
+    }
+
+    UNSAFE_componentWillMount() {
+        console.log('组件将要加载----');
+        
+    }
+
+    componentWillUnmount() {
+        // this.checkClass();
+        console.log('组件将要销毁----',this.props.xbcKey);
+        
     }
 
     /**当父组件重新render 或者当前组件setState时会触发 此方法·1
@@ -62,7 +75,7 @@ class XbcLoadingAnimaion extends Component{
         //检查父组件传递的 xbcKey 与 当前组件保存的key 是否一致
         //不一致 则执行更新组件
         if (props.xbcKey !== state.xbcKey) {
-            //当盘当前动画是否正在执行 正在执行动画时直接更新参数
+            //当前动画是否正在执行 正在执行动画时直接更新参数
             if (!state.animationing) {
                 //未正在执行时 设置切换动画
                 return {

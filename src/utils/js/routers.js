@@ -23,7 +23,7 @@ export default {
         {
             path: "/app",
             component: App,
-            routes: [
+            routers: [
                 {
                     path: "/app/content",
                     component: Content

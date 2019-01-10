@@ -7,29 +7,15 @@ import popup from '../utils/components/popup/Popup';
 //全体提示内容
 import toast from '../utils/components/toast/toast';
 //tips
-import Tooltip from '../utils/components/tooltip/tooltip';
-import { axiosPost } from '../utils/js/requestApi';
+// import Tooltip from '../utils/components/tooltip/tooltip';
+import { axiosPostTest } from '../utils/js/requestApi';
+
 
 import XbcBtn from '../utils/components/xbcBtn/XbcBtn'
+import XbcLoadingAnimaion from '../utils/components/xbcLoadingAnimaion/XbcLoadingAnimaion';
 
 import '../styles/test3.styl';
 import Test5 from './Test5';
-
-
-
-class Test4 extends Component{
-
-    componentDidMount(e) {
-        console.log('子组件测试');
-        
-    }
-
-    render() {
-        console.log(this.props.value,'测试测试');
-        
-        return (<div>{this.props.value}</div>);
-    }
-}
 
 class Test3 extends Component{
 
@@ -47,9 +33,10 @@ class Test3 extends Component{
 
     requestTest() {
         loading.show();
-        this.serverRequest = axiosPost('MyController/test', {
-            "comment": '白菜'
-        }).then(result => {
+        this.serverRequest = axiosPostTest(
+            'http://192.168.137.202:8080/customer/reports/driverReport/2018',
+            "data={phone:'18900000000'}"
+        ).then(result => {
             loading.hide();
             console.log(result);
             toast.show(result.message);
@@ -57,7 +44,6 @@ class Test3 extends Component{
     }
 
     testXbcBtn() {
-        console.log(12412341241);
         let testValue = this.state.testValue;
 
         popup.show(
@@ -73,35 +59,36 @@ class Test3 extends Component{
 
     loadingTest() {
         let testText = this.state.testText;
+        
+        console.log(JSON.parse(localStorage.getItem('userInfo')));
+        
+        
         this.setState({
             testText:++testText
         })
     }
 
-
     render() {
         return (
-            <div className="test3">
-                <Tooltip title="测试测试">
-                    <div>TooltipTooltipTooltipTooltipTooltip</div>
-                </Tooltip>
-                <XbcBtn
-                    content="测试访问数据库"
-                    onClick={this.requestTest}
-                ></XbcBtn>
-                <XbcBtn
-                    content="测试按钮组件"
-                    onClick={this.testXbcBtn}
-                ></XbcBtn>
-                <XbcBtn
-                    content="测试进入与离开"
-                    onClick={this.loadingTest}
-                ></XbcBtn>
-                <Test4 value={this.state.testValue}></Test4>
-                <Test5 xbcKey={this.state.testText} >
-                    <p>{this.state.testText}</p>
-                </Test5>
-            </div>
+            <XbcLoadingAnimaion xbcKey="test3">
+                <div className="test3">
+                    <XbcBtn
+                        content="测试访问数据库"
+                        onClick={this.requestTest}
+                    ></XbcBtn>
+                    <XbcBtn
+                        content="点击弹出弹出层"
+                        onClick={this.testXbcBtn}
+                    ></XbcBtn>
+                    <XbcBtn
+                        content="测试进入与离开"
+                        onClick={this.loadingTest}
+                    ></XbcBtn>
+                    <Test5 xbcKey={this.state.testText} >
+                        <p>{this.state.testText}</p>
+                    </Test5>
+                </div >
+            </XbcLoadingAnimaion>
         )
     }
 }

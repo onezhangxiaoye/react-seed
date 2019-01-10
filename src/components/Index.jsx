@@ -12,8 +12,8 @@ import toast from '../utils/components/toast/toast';
 
 class Index extends Component{
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             name: '',
             password: '',
@@ -43,16 +43,21 @@ class Index extends Component{
         }
         loading.show();
         this.serverRequest = axiosPost('UserController/selectByUserName', {
-            "name": name,
-            "password": password
+            name: name,
+            password: password
         }).then(result => {
             loading.hide();
             console.log(result);
             if (result.message === 'success') {
                 toast.show('登陆成功');
+                localStorage.setItem('userInfo', JSON.stringify({
+                    name:result.data.name,
+                    password:result.data.password,
+                }))
                 // 路由跳转
                 this.props.history.push({ pathname: '/app/content' });
             } else {
+                localStorage.setItem('userInfo', '')
                 toast.show(result.message);
             }
         })

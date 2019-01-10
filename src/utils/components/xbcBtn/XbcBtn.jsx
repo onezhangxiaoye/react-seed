@@ -31,6 +31,8 @@ class XbcBtn extends Component{
 
         return (
             <button
+                onMouseOver={this.props.onMouseOver}
+                onMouseOut={this.props.onMouseOut}
                 className={this.state.xbcbtnClass}
                 style={this.props.style}
                 onClick={(event) => { this.xbcBtnClick(event,this.props.onClick) }}

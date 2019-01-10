@@ -1,6 +1,42 @@
-.bc-tip
+.xbc-tip
     float left
-    background-color: rgba(0, 0, 0, 0.5)
+    background-color: #fff
     border-radius: 6px
     padding: 3px 10px
-    position relative
+    position absolute
+    color: #000
+    transition: transform .5s,opacity .5s
+    display: flex
+    align-items: center
+    justify-content: center
+    box-shadow: 0px 0px 5px 0px #888888;
+    .angle
+        width: 0
+        height: 0
+        position: absolute
+    .angle-top
+        border-left: 8px solid transparent
+        border-right: 8px solid transparent
+        border-top: 10px solid #ddd
+        bottom -10px
+    .angle-bottom
+        border-left: 8px solid transparent
+        border-right: 8px solid transparent
+        border-bottom: 10px solid #ddd
+        top: -10px
+    .angle-left
+        border-top: 8px solid transparent
+        border-bottom: 8px solid transparent
+        border-left: 10px solid #ddd
+        right -10px
+    .angle-right
+        border-top: 8px solid transparent
+        border-bottom: 8px solid transparent
+        border-right: 10px solid #ddd
+        left -10px
+.popupScale0
+    transform: scale(0,0)
+    opacity 0
+.popupScale1
+    transform: scale(1,1)
+    opacity 1

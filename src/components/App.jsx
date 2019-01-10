@@ -1,30 +1,21 @@
 import React, { Component } from 'react';
-import { Route, BrowserRouter as Router } from 'react-router-dom'
 
 import '../styles/app.styl';
 import '../styles/base.styl';
 import Header from './Header';
 import Catalog from './Catalog';
-// import Content from './Content';
-// import Gallery from './Gallery';
-// import Test from './Test';
-// import Test1 from './Test1';
-// import DataList from './DataList';
-// import Test3 from './Test3';
-// import ImgDataList from './ImgDataList';
-// import AddImgData from './AddImgData';
-import XbcLoadingAnimaion from '../utils/components/xbcLoadingAnimaion/XbcLoadingAnimaion';
 
+import XbcRouter from '../utils/components/xbcRouter/XbcRouter';
 
 class App extends Component {
 
-  constructor({ routes }) {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       xbcKey:0
     }
     this.routeChange = this.routeChange.bind(this);
-    this.routes = routes;
+    this.routers = props.routers;
   }
 
   /**监控子组件参数修改的的方法
@@ -42,21 +33,18 @@ class App extends Component {
     return (
       <div className="App">
         <Header></Header>
-        <Router>
-          <div className="App-body">
-            <Catalog routeChange={this.routeChange}></Catalog>
-            <XbcLoadingAnimaion xbcKey={this.state.xbcKey}>
-              {this.routes.map((route, i) => (
-                <Route
+        <div className="App-body">
+          <Catalog routeChange={this.routeChange}></Catalog>
+          <div className="body-right">
+            {this.routers.map((route, i) => (
+              <XbcRouter
                   path={route.path}
                   key={i}
-                  render={props => (
-                      <route.component {...props} routes={route.routes} />)}
+                  component={route.component}
                 />
               ))}
-            </XbcLoadingAnimaion>
           </div>
-        </Router>
+        </div>
       </div>
     );
   }

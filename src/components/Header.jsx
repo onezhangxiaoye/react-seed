@@ -2,6 +2,11 @@
 import React, { Component } from 'react';
 import header from '../assets/herder.png';
 
+
+//tips
+import Tooltip from '../utils/components/tooltip/tooltip';
+import Clock from '../utils/components/clock/Clock'
+
 class Header extends Component{
     constructor() {
         super();
@@ -74,7 +79,9 @@ class Header extends Component{
                     <img src={header} alt="" />
                     <span>Admin</span>
                 </div>
-                <div className="time">{this.state.time}</div>
+                <Tooltip title="测试进入与离开" position={'bottom'} content={(<Clock></Clock>)}>
+                    <div className="time">{this.state.time}</div>
+                </Tooltip>
             </div>
         )
     }
