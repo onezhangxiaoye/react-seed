@@ -4,8 +4,8 @@
 
 export default {
         //基础请求路径
-        // baseURL: 'http://192.168.1.9:8123/',
-        baseURL: 'http://www.zhangxiaoye.top:8123/',
+        baseURL: 'http://192.168.137.202:8123/',
+        // baseURL: 'http://www.zhangxiaoye.top:8123/',
         
         //请求超时时间
         timeout: 1000,

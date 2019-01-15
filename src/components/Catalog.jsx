@@ -1,8 +1,7 @@
 /* 左边导航栏组件 */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-
-
+import { axiosPost } from '../utils/js/requestApi';
 
 class Catalog extends Component{
 
@@ -18,7 +17,17 @@ class Catalog extends Component{
      * 初始化目录结构栏
      */
     componentWillMount() {
-        const navLinkList = [
+
+        let navLinkList = []
+
+        this.serverRequest = axiosPost('UrlController/selectAllData').then(result => {
+            console.log(result);
+            result.data.forEach((iteam, index) => {
+                navLinkList.push()
+            })
+        }) 
+
+        navLinkList = [
             {to:'/app/content',name:'首页',exact:false,click: false,showChild:false},
             {to:'/app/gallery', name: '画廊', exact: true, click: false,showChild:false},
             {to:'/app/test',name:'加密测试',exact:false,click: false,showChild:false},
@@ -92,7 +101,6 @@ class Catalog extends Component{
             navLinkListData: navLinkListData,
             navLinkClick:_index
         })
-        this.props.routeChange(_index)
     }
 
     render() {

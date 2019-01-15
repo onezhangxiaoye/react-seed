@@ -5,7 +5,6 @@ import { axiosPost } from '../utils/js/requestApi';
 import baseData from '../utils/js/baseData';
 //全局加载状态
 import popup from '../utils/components/popup/Popup';
-import XbcLoadingAnimaion from '../utils/components/xbcLoadingAnimaion/XbcLoadingAnimaion';
 
 class ImgDataList extends Component{
 
@@ -56,27 +55,25 @@ class ImgDataList extends Component{
 
     render() {
         return (
-            <XbcLoadingAnimaion xbcKey="imgDataList">
-                <div className="img-data-list">
+            <div className="img-data-list">
 
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>ID</td>
-                                <td>图片名称</td>
-                                <td>图片介绍</td>
-                                <td>图片路径</td>
-                                <td>评论</td>
-                                <td>图片</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.dataList}
-                        </tbody>
-                    </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>ID</td>
+                            <td>图片名称</td>
+                            <td>图片介绍</td>
+                            <td>图片路径</td>
+                            <td>评论</td>
+                            <td>图片</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.dataList}
+                    </tbody>
+                </table>
 
-                </div>
-            </XbcLoadingAnimaion>
+            </div>
         )
     }
 }

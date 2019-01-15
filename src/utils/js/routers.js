@@ -18,43 +18,53 @@ export default {
     routers: [
         {
             path: "/",
-            component: Index
+            component: Index,
+            anmation:false
         },
         {
             path: "/app",
             component: App,
+            anmation:false,
             routers: [
                 {
                     path: "/app/content",
-                    component: Content
+                    component: Content,
+                    anmation:true
                 },
                 {
                     path: "/app/gallery",
-                    component: Gallery
+                    component: Gallery,
+                    anmation:true
                 },
                 {
                     path: "/app/test",
-                    component: Test
+                    component: Test,
+                    anmation:true
                 },
                 {
                     path: "/app/test1",
-                    component: Test1
+                    component: Test1,
+                    anmation:true
                 },
                 {
                     path: "/app/dataList",
-                    component: DataList
+                    component: DataList,
+                    anmation:true
                 },
                 {
                     path: "/app/test3",
-                    component: Test3
+                    component: Test3,
+                    anmation:true
                 },
                 {
                     path: "/app/imgDataList",
-                    component: ImgDataList
+                    component: ImgDataList,
+                    anmation:true
                 },
                 {
                     path: "/app/addImgData",
-                    component: AddImgData
+                    component: AddImgData,
+                    anmation:true
                 },
             ]
         }

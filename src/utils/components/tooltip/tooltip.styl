@@ -1,3 +1,4 @@
+@import '../../stylus/baseStylus.styl'
 .xbc-tip
     float left
     background-color: #fff
@@ -9,7 +10,7 @@
     display: flex
     align-items: center
     justify-content: center
-    box-shadow: 0px 0px 5px 0px #888888;
+    box-shadow: 0px 0px 5px 0px $tip-color;
     .angle
         width: 0
         height: 0
@@ -17,22 +18,22 @@
     .angle-top
         border-left: 8px solid transparent
         border-right: 8px solid transparent
-        border-top: 10px solid #ddd
+        border-top: 10px solid $tip-color
         bottom -10px
     .angle-bottom
         border-left: 8px solid transparent
         border-right: 8px solid transparent
-        border-bottom: 10px solid #ddd
+        border-bottom: 10px solid $tip-color
         top: -10px
     .angle-left
         border-top: 8px solid transparent
         border-bottom: 8px solid transparent
-        border-left: 10px solid #ddd
+        border-left: 10px solid $tip-color
         right -10px
     .angle-right
         border-top: 8px solid transparent
         border-bottom: 8px solid transparent
-        border-right: 10px solid #ddd
+        border-right: 10px solid $tip-color
         left -10px
 .popupScale0
     transform: scale(0,0)

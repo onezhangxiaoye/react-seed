@@ -66,7 +66,7 @@ class XbcLoadingAnimaion extends Component{
         
     }
 
-    /**当父组件重新render 或者当前组件setState时会触发 此方法·1
+    /**当父组件重新render 或者当前组件setState时会触发 此方法
      * 
      * @param {Obejct} props  父组件的传递的 新props
      * @param {Obejct} state  子组件的旧 state

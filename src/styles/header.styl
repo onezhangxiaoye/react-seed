@@ -1,6 +1,7 @@
+@import '../utils/stylus/baseStylus.styl'
 .App-header
     height 10%
-    background-color #61dafb
+    background-color $background-color
     display: flex
     align-items: center
     flex-direction: row-reverse
@@ -15,3 +16,12 @@
         >img
             border-radius: 50px
             width: 50px
+            margin: 0 5px
+.my
+    >li
+        margin-bottom: 5px
+        cursor pointer
+        background-color: #fff
+        transition: background-color .5s
+        &:hover
+            background-color: #de995e

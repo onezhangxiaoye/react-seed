@@ -1,9 +1,10 @@
+@import '../utils/stylus/baseStylus.styl'
 .App-catalog
     width 20%
     text-align left
     position: absolute
     z-index: 1
-    background-color: #f1f1f1
+    background-color: $background-color-bg
     .catalog-ul
         padding: 10px
         margin: 10px
@@ -15,12 +16,12 @@
             background-color: #fff
             transition: background-color 0.5s ease-in-out
             &:hover
-                background-color: #D5EBFC
+                background-color: $background-color-hover
                 
         .chooseCatalog
-            background-color: #2395F1
+            background-color: $background-color
             &:hover
-                background-color: #2395F1
+                background-color: $background-color
         a
             padding 10px 0
             display: block

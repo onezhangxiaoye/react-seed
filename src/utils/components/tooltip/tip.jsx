@@ -14,6 +14,8 @@ class Tip extends Component{
             position:'angle angle-top',
             tipRef:this.tipRef
         };
+        this.onMouseEnter = this.onMouseEnter.bind(this);
+        this.onMouseLeave = this.onMouseLeave.bind(this);
     }
     /**
      * 当组件挂载完成  修改class 产生出现的效果
@@ -85,14 +87,28 @@ class Tip extends Component{
 
     componentWillUnmount() {
         console.log('销毁-----');
-        
     }
+
+    onMouseEnter() {
+        this.props.func(true);
+    }
+
+    onMouseLeave() {
+        this.props.func(false);
+    }
+
     render() {
         return (
-        <div className={this.state.showClass} style={this.state.style} ref={this.tipRef}>
-            <div>{this.props.content}</div>
-            <div className={this.state.position}></div>
-        </div>
+            <div
+                onMouseEnter={this.onMouseEnter} 
+                onMouseLeave={this.onMouseLeave}
+                className={this.state.showClass}
+                style={this.state.style}
+                ref={this.tipRef}
+            >
+                <div>{this.props.content}</div>
+                <div className={this.state.position}></div>
+            </div>
         )
     }
 }

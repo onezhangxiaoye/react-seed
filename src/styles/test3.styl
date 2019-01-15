@@ -1,18 +1,23 @@
+@import '../utils/stylus/baseStylus.styl'
 .test3
     width: 100%
     overflow hidden
+    height 100%
     button
-        margin: 10px 
-    .request
-        width: 300px
-        line-height: 44px
-        background-color: #1890ff
-        color: #fff
-        border-radius: 6px
+        margin: 10px
+    .test-red
+        background-color: $background-color
+        width: 10%
         text-align: center
-        cursor pointer
-    .content-test
-        height 120px
-        width: 200px
-        background-color: pink
-        margin: 100px
+        position absolute
+        margin: 5px 0
+        transition: left 1s,opacity 1s
+        // .example-appear
+        //     opacity: 0.01
+        // .example-appear.example-appear-active
+        //     opacity: 1
+    .move
+        background-color: $background-color
+        width: 50px
+        height: 50px
+        border-radius: $border-radius

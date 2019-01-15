@@ -1,6 +1,7 @@
 /* 首页组件*/
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch } from 'react-router-dom'
+import { Router, Switch } from 'react-router-dom'
+import history from "../utils/components/xbcRouter/history";
 //全局路由配置参数
 import _route from '../utils/js/routers';
 
@@ -10,7 +11,7 @@ class Home extends Component{
 
     render() {
         return (
-            <Router>
+            <Router history={history}>
                 <Switch>
                     {_route.routers.map((route, i) => (
                         <XbcRouter
@@ -19,6 +20,7 @@ class Home extends Component{
                             key={i}
                             component={route.component}
                             routers={route.routers}
+                            animation={route.animation}
                         />
                     ))}
                 </Switch>

@@ -2,10 +2,28 @@
 import React, { Component } from 'react';
 import header from '../assets/herder.png';
 
-
 //tips
 import Tooltip from '../utils/components/tooltip/tooltip';
 import Clock from '../utils/components/clock/Clock'
+import history from "../utils/components/xbcRouter/history";
+
+class LoginOut extends Component{
+    loginOut(){
+        localStorage.setItem('userInfo', '')
+        // 路由跳转
+        history.replace('/');
+    }
+
+    render() {
+        return (
+            <ul className="my">
+                <li>我的</li>
+                <li>信息</li>
+                <li onClick={() => {this.loginOut()}}>退出</li>
+            </ul>
+        );
+    }
+}
 
 class Header extends Component{
     constructor() {
@@ -71,15 +89,22 @@ class Header extends Component{
         }
     }
 
+    getUserName() {
+        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        return userInfo.name;
+    }
+
 
     render() {
         return (
             <div className="App-header">
                 <div className="portrait">
                     <img src={header} alt="" />
-                    <span>Admin</span>
+                    <Tooltip position='bottom' content={(<LoginOut></LoginOut>)}>
+                        <span>{this.getUserName()}</span>
+                    </Tooltip>
                 </div>
-                <Tooltip title="测试进入与离开" position={'bottom'} content={(<Clock></Clock>)}>
+                <Tooltip position='bottom' content={(<Clock></Clock>)}>
                     <div className="time">{this.state.time}</div>
                 </Tooltip>
             </div>

@@ -9,6 +9,7 @@ import { axiosPost } from '../utils/js/requestApi';
 import loading from '../utils/components/loading/loading';
 //全体提示内容
 import toast from '../utils/components/toast/toast';
+import history from "../utils/components/xbcRouter/history";
 
 class Index extends Component{
 
@@ -55,7 +56,7 @@ class Index extends Component{
                     password:result.data.password,
                 }))
                 // 路由跳转
-                this.props.history.push({ pathname: '/app/content' });
+                history.push('/app/content');
             } else {
                 localStorage.setItem('userInfo', '')
                 toast.show(result.message);

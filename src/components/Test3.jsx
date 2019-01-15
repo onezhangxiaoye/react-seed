@@ -10,12 +10,12 @@ import toast from '../utils/components/toast/toast';
 // import Tooltip from '../utils/components/tooltip/tooltip';
 import { axiosPostTest } from '../utils/js/requestApi';
 
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
 
 import XbcBtn from '../utils/components/xbcBtn/XbcBtn'
-import XbcLoadingAnimaion from '../utils/components/xbcLoadingAnimaion/XbcLoadingAnimaion';
 
 import '../styles/test3.styl';
-import Test5 from './Test5';
 
 class Test3 extends Component{
 
@@ -24,7 +24,8 @@ class Test3 extends Component{
         this.fileInput = React.createRef();
         this.state = {
             testValue: 1,
-            testText:1
+            testText: 1,
+            items: ['hello', 'world', 'click', 'me']
         }
         this.requestTest = this.requestTest.bind(this);
         this.testXbcBtn = this.testXbcBtn.bind(this);
@@ -57,38 +58,45 @@ class Test3 extends Component{
         });
     }
 
-    loadingTest() {
+    loadingTest(i) {
         let testText = this.state.testText;
-        
-        console.log(JSON.parse(localStorage.getItem('userInfo')));
-        
         
         this.setState({
             testText:++testText
         })
+        let newItems = this.state.items.slice();
+        newItems.splice(i, 1);
+        this.setState({items: newItems});
     }
 
     render() {
+        let items = <div key={this.state.testText} className="test-red">{this.state.testText}</div>
         return (
-            <XbcLoadingAnimaion xbcKey="test3">
-                <div className="test3">
-                    <XbcBtn
-                        content="测试访问数据库"
-                        onClick={this.requestTest}
-                    ></XbcBtn>
-                    <XbcBtn
-                        content="点击弹出弹出层"
-                        onClick={this.testXbcBtn}
-                    ></XbcBtn>
-                    <XbcBtn
-                        content="测试进入与离开"
-                        onClick={this.loadingTest}
-                    ></XbcBtn>
-                    <Test5 xbcKey={this.state.testText} >
-                        <p>{this.state.testText}</p>
-                    </Test5>
-                </div >
-            </XbcLoadingAnimaion>
+            <div className="test3">
+                <XbcBtn
+                    content="测试访问数据库"
+                    onClick={this.requestTest}
+                ></XbcBtn>
+                <XbcBtn
+                    content="点击弹出弹出层"
+                    onClick={this.testXbcBtn}
+                ></XbcBtn>
+                <XbcBtn
+                    content="测试进入与离开"
+                    onClick={this.loadingTest}
+                ></XbcBtn>
+                <input type="range" />
+                <div className="move"></div>
+                <ReactCSSTransitionGroup
+                    component="div"
+                    className="react-container"
+                    transitionName="example"
+                    transitionEnterTimeout={1000}
+                    transitionLeaveTimeout={1000}
+                >
+                    {items}
+                </ReactCSSTransitionGroup>
+            </div >
         )
     }
 }
