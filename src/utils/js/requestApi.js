@@ -4,7 +4,7 @@ import baseData from './baseData';
 //全局加载状态
 import loading from '../components/loading/loading';
 //全体提示内容
-import toast from '../components/toast/toast';
+import componentsContainer from '../components/componentsContainer/componentsContainer';
 
 /**
  * 使用自定义配置新建一个 axios 实例
@@ -22,13 +22,20 @@ var _axios = axios.create({
    * @param {Object} params  请求参数
    */
 export function axiosPost(url, params) {
+
+    console.log('请求值---', url, params);
+    
     return new Promise((resolve, reject) => {
         _axios.post(url,objToFormData(params))
-        .then(result => {
+            .then(result => {
+
+            console.log('响应值---', result);
+                
             resolve(result.data);
         }).catch(error => {
+            console.log(error);
             loading.hide();
-            toast.show('请求超时');
+            componentsContainer.toast.show('请求超时');
             reject(error);
         })
     })
@@ -69,7 +76,7 @@ var axiosTest = axios.create({
             resolve(result.data);
         }).catch(error => {
             loading.hide();
-            toast.show('请求超时');
+            componentsContainer.toast.show('请求超时');
             reject(error);
         })
     })

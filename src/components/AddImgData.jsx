@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { axiosPost } from '../utils/js/requestApi';
 import fileUpload from '../assets/fileUpload.svg';
 //全体提示内容
-import toast from '../utils/components/toast/toast';
+import componentsContainer from '../utils/components/componentsContainer/componentsContainer';
 //全局加载状态
 import loading from '../utils/components/loading/loading';
 //引入基础数据参数
@@ -45,22 +45,22 @@ class AddImgData extends Component{
     handleSubmit() {
         let imgName = this.state.imgName;
         if (imgName === '') {
-            toast.show('请输入图片名称');
+            componentsContainer.toast.show('请输入图片名称');
             return;
         }
         let introduce = this.state.introduce;
         if (introduce === '') {
-            toast.show('请输入图片介绍');
+            componentsContainer.toast.show('请输入图片介绍');
             return;
         }
         let comment = this.state.comment;
         if (comment === '') {
-            toast.show('请输入图片评论信息');
+            componentsContainer.toast.show('请输入图片评论信息');
             return;
         }
         let file = this.state.inputImgs[0];
         if (file.length === 0) {
-            toast.show('必须选择上传得图片');
+            componentsContainer.toast.show('必须选择上传得图片');
             return;
         }
         loading.show();
@@ -73,7 +73,7 @@ class AddImgData extends Component{
             loading.hide();
             console.log(result);
             if (result.message === 'success') {
-                toast.show('添加图片成功');
+                componentsContainer.toast.show('添加图片成功');
             }
         })
     }
@@ -94,7 +94,7 @@ class AddImgData extends Component{
         const files = event.target.files[0];
         const fileName = files.name;
         if (imgPostfix.indexOf(fileName.substring(fileName.lastIndexOf('.'))) === -1) {
-            toast.show('文件格式错误');
+            componentsContainer.toast.show('文件格式错误');
             return;
         }
         
@@ -152,25 +152,25 @@ class AddImgData extends Component{
         return (
             <div className="add-img-data">
                 <form>
-                    <div className="xbc-input" >
+                    <div className="xbcc-input" >
                         <div className="title" ><font>*</font>图片名称:</div>
                         <div className="input" >
                             <input type="text" name="imgName" onChange={this.inputChange}/>
                         </div>
                     </div>
-                    <div className="xbc-input" >
+                    <div className="xbcc-input" >
                         <div className="title" ><font>*</font>图片介绍:</div>
                         <div className="input" >
                             <input type="text" name="introduce" onChange={this.inputChange}/>
                         </div>
                     </div>
-                    <div className="xbc-input" >
+                    <div className="xbcc-input" >
                         <div className="title" ><font>*</font>评论一下:</div>
                         <div className="input" >
                             <input type="text" name="comment" onChange={this.inputChange}/>
                         </div>
                     </div>
-                    <div className="xbc-input" >
+                    <div className="xbcc-input" >
                         <div className="title" ><font>*</font>选择上传的文件:</div>
                         <div className="input" >
                             <div onClick={this.fileupload} className="fileupload">
@@ -186,7 +186,7 @@ class AddImgData extends Component{
                             />
                         </div>
                     </div>
-                    <div className="xbc-input" >
+                    <div className="xbcc-input" >
                         <div className="title" ></div>
                         <div className="preview" >
                             {this.state.imgs}

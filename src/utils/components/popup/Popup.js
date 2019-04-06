@@ -28,7 +28,7 @@ class Popup extends Component{
     /**
      * 关闭弹窗窗口
      */
-    close() {
+    close(e) {
         this.setState({
             popupClass: 'popup',
             popupScale:'popupScale popupScale0'
@@ -42,7 +42,7 @@ class Popup extends Component{
     render() {
         return (
             <div style={this.props.style} className={this.state.popupClass} onClick={this.close}>
-                <div className={this.state.popupScale}>
+                <div className={this.state.popupScale} onClick={e => e.stopPropagation()}>
                     {this.props.dom}
                 </div>
             </div>

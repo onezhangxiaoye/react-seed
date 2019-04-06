@@ -1,39 +1,40 @@
 @import '../utils/stylus/baseStylus.styl'
 .App-catalog
-    width 20%
     text-align left
     position: absolute
+    top: 150px
+    left 30px
+    bottom 30px
+    width: 175px
     z-index: 1
-    background-color: $background-color-bg
+    border: 3px solid $background-color-ccc
+    border-radius: $border-radius 
+    transition: border-color .5s
+    overflow: auto
+    &:hover
+        border-color: $background-color-888
     .catalog-ul
-        padding: 10px
         margin: 10px
-        background-color: #fff
-        border-radius: 6px
-        color: rgba(13,27,62,.65)
+        border-radius: $border-radius 
+        color: $font-color
         >div>li
-            border-radius: 6px
-            background-color: #fff
-            transition: background-color 0.5s ease-in-out
+            border-radius: $border-radius 
+        li
+            transition: background-color .5s
             &:hover
-                background-color: $background-color-hover
+                background-color: $background-color-888
                 
         .chooseCatalog
-            background-color: $background-color
+            background-color: $background-color-ccc
             &:hover
-                background-color: $background-color
+                background-color: $background-color-888
         a
             padding 10px 0
             display: block
             color: rgba(13,27,62,.65)
     .li-ul
         margin-left: 10px
-    .li-div
-        overflow hidden
-        transition: height 0.5s ease-in-out
-    .li-div1
-        height 0px
-    .li-div2
-        height 63px
+        > li
+            border-radius: $border-radius 
 
         

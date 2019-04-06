@@ -1,7 +1,7 @@
-import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import './toast.styl';
 import error from './error.png';
+
 
 class Toast extends Component{
 
@@ -14,9 +14,6 @@ class Toast extends Component{
 
 
     componentDidMount() {
-        // this.setState({
-        //     show:'toast toast-top1'
-        // })
         setTimeout(() => {
             this.setState({
                 show:'toast toast-top2'
@@ -39,16 +36,4 @@ class Toast extends Component{
         )
     }
 }
-
-const div = document.createElement('div');
-
-export default {
-    show(props = '异常错误') {
-        document.body.appendChild(div);
-        ReactDOM.render(<Toast title={props} />, div);
-
-        setTimeout(() => {
-            ReactDOM.unmountComponentAtNode(div)
-        },2200);
-    }
-}
+export default Toast;

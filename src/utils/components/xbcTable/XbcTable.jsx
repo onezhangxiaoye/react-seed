@@ -19,8 +19,8 @@ class XbcTable extends Component{
 
         props.dataSource.forEach((el, index) => {
             let arr3 = [];
-            props.columns.forEach(elColumns => {
-                arr3.push(<td>{el[elColumns.key]}</td>);
+            props.columns.forEach((elColumns,_index) => {
+                arr3.push(<td key={'td_' + _index}>{el[elColumns.key]}</td>);
             });
             arr1.push(<tr key={'tr_' + index}>{arr3}</tr>);
         });

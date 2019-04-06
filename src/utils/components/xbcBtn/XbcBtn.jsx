@@ -11,11 +11,14 @@ class XbcBtn extends Component{
         this.xbcBtnClick = this.xbcBtnClick.bind(this);
     }
 
-    xbcBtnClick(event, func) {
+    xbcBtnClick(event) {
+        const { onClick, data } = this.props;
+        console.log(data);
+        
         // 阻止合成事件间的冒泡
         event.stopPropagation();
-        if (func !== undefined) {
-            func();
+        if (onClick !== undefined) {
+            onClick(data);
         }
         this.setState({
             xbcbtnClass:'xbcbtn xbcbtn-animation-blue'
@@ -36,7 +39,7 @@ class XbcBtn extends Component{
                 onFocus={this.props.onFocus}
                 className={this.state.xbcbtnClass}
                 style={this.props.style}
-                onClick={(event) => { this.xbcBtnClick(event,this.props.onClick) }}
+                onClick={this.xbcBtnClick}
                 type="button"
             >
                 {this.props.content}

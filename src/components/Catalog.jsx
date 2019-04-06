@@ -3,115 +3,116 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { axiosPost } from '../utils/js/requestApi';
 
-class Catalog extends Component{
+import { connect } from 'react-redux'
 
-    constructor() {
-        super();
-        this.state = {
-            navLinkListData:'',
-            navLinkClick:-1
-        }
-    }
-
+class Catalog_ extends Component{
     /**
      * 初始化目录结构栏
      */
     componentWillMount() {
-
-        let navLinkList = []
-
-        this.serverRequest = axiosPost('UrlController/selectAllData').then(result => {
-            console.log(result);
-            result.data.forEach((iteam, index) => {
-                navLinkList.push()
-            })
-        }) 
-
-        navLinkList = [
-            {to:'/app/content',name:'首页',exact:false,click: false,showChild:false},
-            {to:'/app/gallery', name: '画廊', exact: true, click: false,showChild:false},
-            {to:'/app/test',name:'加密测试',exact:false,click: false,showChild:false},
-            {to:'/app/test1',name:'Scroll滚动测试',exact:false,click: false,showChild:false},
-            {to:'/app/dataList',name:'请求数据表',exact:false,click: false,showChild:false},
-            {to:'/app/test3',name:'全局组件测试',exact:false,click: false,showChild:false},
-            {to:'/app/imgDataList',name:'图片数据',exact:false,click: false,showChild:false},
-            {to:'/app/addImgData',name:'添加图片数据',exact:false,click: false,showChild:false},
-        ]
-        this.setState({
-            navLinkListData:navLinkList
-        })
-
-    }
-
-    catalogUl(props) {
-        let arr = [];
-        const len = this.state.navLinkListData.length;
-        for (let index = 0; index < len; index++) {
-            arr.push(
-                <div key={'navLinkList' + index}>
-                    <li
-                        className={props[index].click ? 'chooseCatalog' : ''}
-                        onClick={() => this.openCatalogChildUl(index)}
-                        style={props[index].click ? {transition:'none'} : {}}
-                    >
-                        <Link to={props[index].to}>
-                            {props[index].name}
-                        </Link>
-                    </li>
-                    <div className={props[index].showChild ? 'li-div li-div2' : 'li-div li-div1'}>
-                        { props[index].showChild && this.creatCatalogChildUl()}
-                    </div>
-                </div>
-            );
-        } 
-        return arr;
-    }
-
-    /**
-     * 创建下拉栏
-     */
-    creatCatalogChildUl() {
-        return (
-            <ul className="li-ul">
-                <li>我的</li>
-                <li>我的</li>
-                <li>我的</li>
-            </ul>
-        );
-    }
-
-    openCatalogChildUl(index) {
-        let _index = index*1;
-        let navLinkListData = this.state.navLinkListData;
-        
-        if (this.state.navLinkClick !== -1 && this.state.navLinkClick !== _index) {
-            navLinkListData[this.state.navLinkClick].showChild = false;
-            navLinkListData[_index].showChild = true;
-            navLinkListData[this.state.navLinkClick].click = false;
-            navLinkListData[_index].click = true;
-        } else if (this.state.navLinkClick === _index) {
-            navLinkListData[_index].showChild = false;
-            _index = -1;
-        } else {
-            navLinkListData[_index].showChild = true;
-            navLinkListData[_index].click = true;
-        }
-        
-        this.setState({
-            navLinkListData: navLinkListData,
-            navLinkClick:_index
-        })
+        this.props.initData();
     }
 
     render() {
+        const {navList,pathname} = this.props
         return (
             <div className="App-catalog">
                 <ul className="catalog-ul">
-                    {this.catalogUl(this.state.navLinkListData)}
+                    {
+                        navList.map((iteam, index) => {
+                            return (
+                                <div key={'navLinkList_' + index}>
+                                    <li
+                                        className={pathname === iteam.to ? 'chooseCatalog' : ''}
+                                        style={iteam.click ? { transition: 'none' } : {}}
+                                    >
+                                        <Link to={iteam.to}>
+                                            {iteam.name}
+                                        </Link>
+                                    </li>
+                                    <div className=''>
+                                        {pathname.indexOf(iteam.to) !== -1 && (<ul className="li-ul">{
+                                            iteam.childUl.map((citeam, cindex) => {
+                                                return (
+                                                    <li
+                                                        className={pathname === citeam.to ? 'chooseCatalog' : ''}
+                                                        style={citeam.click ? { transition: 'none' } : {}}
+                                                        key={'childUl_' + cindex}
+                                                    >
+                                                        <Link to={citeam.to}>
+                                                            {citeam.name}
+                                                        </Link>
+                                                    </li>
+                                                );
+                                            })
+                                        }</ul>)}
+                                    </div>
+                                </div>
+                            );
+                       }) 
+                    }
                 </ul>
             </div>
         )
     }
 }
+
+/** 对一级导航栏数据进行排序
+ * 
+ * @param {Array} data 导航栏列表数据
+ */
+function sortList(data) {
+    let nav1 = [];
+    data.forEach(iteam => {
+        if (iteam.tagFatherId === 0) {
+            nav1[iteam.number * 1] = iteam;
+        }
+    });
+    return nav1;
+}
+
+/**此处返回的对象 更新为连接的组件的 Props
+ * 
+ * @param {Object} state redux store 存储的对象
+ */
+function mapStateToProps(state) {
+    const navdata = state.nav.catalog;
+    let result = sortList(navdata.nav);
+    // 循环一级导航栏数据
+    result.forEach((iteam,index) => {
+        let childUl = [];
+        // 循环数据中的 二级导航栏数据
+        navdata.nav.forEach(iteamChildUl => { 
+            if (iteam.id === iteamChildUl.tagFatherId) {
+                childUl.push(iteamChildUl);
+            }
+        })
+        //为一级导航栏设置子导航栏数据
+        result[index].childUl = childUl;
+    })
+    return {
+        navList: result,
+        pathname:navdata.pathname,
+        initData:initData
+    };
+  }
+
+  /** 此处用户匹配对应的 action 用于更新 redux store state
+   *  初始化导航栏
+   */
+const initData = () => {
+    // 异步请求 导航栏数据
+    return {
+        type: 'setNav',
+        payload:axiosPost('UrlController/selectAllData')
+    };
+}
+  
+const Catalog = connect(
+    mapStateToProps,
+    {
+        initData
+    }
+)(Catalog_)
 
 export default Catalog;

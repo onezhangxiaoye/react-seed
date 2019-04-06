@@ -8,7 +8,7 @@ import { axiosPost } from '../utils/js/requestApi';
 //全局加载状态
 import loading from '../utils/components/loading/loading';
 //全体提示内容
-import toast from '../utils/components/toast/toast';
+import componentsContainer from '../utils/components/componentsContainer/componentsContainer';
 import history from "../utils/components/xbcRouter/history";
 
 class Index extends Component{
@@ -28,7 +28,7 @@ class Index extends Component{
         let focus = this.state.focus;
         let name = this.state.name;
         if (name === '') {
-            toast.show('用户名不能为空');
+            componentsContainer.toast.show('用户名不能为空');
             focus[0] = 'login-input';
             focus[1] = '';
             this.setState({focus:focus});
@@ -36,7 +36,7 @@ class Index extends Component{
         }
         let password = this.state.password;
         if (password === '') {
-            toast.show('密码不能为空');
+            componentsContainer.toast.show('密码不能为空');
             focus[0] = '';
             focus[1] = 'login-input';
             this.setState({focus:focus});
@@ -48,18 +48,20 @@ class Index extends Component{
             password: password
         }).then(result => {
             loading.hide();
-            console.log(result);
             if (result.message === 'success') {
-                toast.show('登陆成功');
+                componentsContainer.toast.show('登陆成功');
                 localStorage.setItem('userInfo', JSON.stringify({
                     name:result.data.name,
                     password:result.data.password,
                 }))
-                // 路由跳转
-                history.push('/app/content');
+                localStorage.removeItem("nav");
+                setTimeout(() => {
+                    // 路由跳转
+                    history.push('/app/content');
+                }, 3000);
             } else {
                 localStorage.setItem('userInfo', '')
-                toast.show(result.message);
+                componentsContainer.toast.show(result.message);
             }
         })
     }
@@ -79,7 +81,7 @@ class Index extends Component{
         return (
             <div className="index">
                 <p className="title">xiaoBaiCai <span>Login Form</span></p>
-                <p className="title-content">The world is a fine place and worth fighting for.</p>
+                <p className="title-content">Don't forget, a person's greatest emotional need is to feel appreciated.</p>
                 <div className="index-content">
                     <div className="content-top">
                         <div>

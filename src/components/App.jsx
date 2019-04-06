@@ -4,6 +4,7 @@ import '../styles/app.styl';
 import '../styles/base.styl';
 import Header from './Header';
 import Catalog from './Catalog';
+import BgCanvas from '../utils/components/bgCanvas/BgCanvas'
 
 import XbcRouter from '../utils/components/xbcRouter/XbcRouter';
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
@@ -16,24 +17,22 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props);
-    
     const { location } = this.props;
     
     const appRouter = <div key={location.pathname} className="appRouter">
               {this.routers.map((route, i) => (
-                  <XbcRouter
+                  location.pathname === route.path ? <XbcRouter
                   path={route.path}
                   key={i}
                   component={route.component}
-                />
+                /> : null
               ))}</div>
 
     return (
       <div className="App">
+        <BgCanvas></BgCanvas>
         <Header></Header>
-        <div className="App-body">
-          <Catalog></Catalog>
+        <Catalog></Catalog>
           <div className="body-right">
             <ReactCSSTransitionGroup
               component="div"
@@ -45,7 +44,6 @@ class App extends Component {
               {appRouter}
             </ReactCSSTransitionGroup>
           </div>
-        </div>
       </div>
     );
   }
