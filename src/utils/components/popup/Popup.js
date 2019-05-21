@@ -1,6 +1,6 @@
 /* 弹出层组件*/
-import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
+import creatComponentsContainer from '../componentsContainer/componentsContainer'
 
 import './popup.styl';
 
@@ -28,36 +28,43 @@ class Popup extends Component{
     /**
      * 关闭弹窗窗口
      */
-    close(e) {
-        this.setState({
-            popupClass: 'popup',
-            popupScale:'popupScale popupScale0'
-        })
-        setTimeout(() => {
-            ReactDOM.unmountComponentAtNode(div)
-        }, 500);
-        
+    close(e = false) {
+        if (this.props.close !== false || e === true) {
+            this.setState({
+                popupClass: 'popup',
+                popupScale:'popupScale popupScale0'
+            })
+            setTimeout(() => {
+                console.log('popup.show-----',popupRef);
+                ref.current.clean();
+            }, 500);
+        }
     }
 
     render() {
         return (
             <div style={this.props.style} className={this.state.popupClass} onClick={this.close}>
                 <div className={this.state.popupScale} onClick={e => e.stopPropagation()}>
-                    {this.props.dom}
+                    {this.props.children}
                 </div>
             </div>
         )
     }
 }
 
-const div = document.createElement('div');
+let ref;
+let popupRef;
 
 export default {
-    show(dom,style = {}) {
-        document.body.appendChild(div);
-        ReactDOM.render(<Popup style={style} dom={dom}/>, div);
+    show(dom, style = {}, close = true,type = 0) {
+        ref = creatComponentsContainer('popup-componets' + type);
+        popupRef = React.createRef();
+        ref.current.add(<Popup style={style} ref={popupRef} close={close}>{dom}</Popup>);
+        console.log('popup.show-----',popupRef);
     },
-    hide() {
-        ReactDOM.unmountComponentAtNode(div)
-    }
+    hide(bool = false) {
+        console.log('popup.show-----',popupRef);
+        popupRef.current.close(bool);
+    },
+    popup:Popup
 }

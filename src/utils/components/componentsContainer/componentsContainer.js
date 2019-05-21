@@ -1,6 +1,5 @@
 /* 弹出层组件*/
 import React, { Component } from 'react';
-import Toast from "../toast/toast";
 import ReactDOM from 'react-dom';
 
 class ComponentsContainer extends Component{
@@ -8,58 +7,49 @@ class ComponentsContainer extends Component{
     constructor() {
         super();
         this.state = {
-            toasts:[]
+            components:''
         }
     }
 
-    add(title,toastType) {
-        const key = 'toast_' + new Date().getTime();
-        let toasts = this.state.toasts;
-        toasts.push({
-            title:title,
-            key:key,
-        });
+    /**添加展示内容
+     * 
+     * @param {Object} components 需要展示的组件组件
+     */
+    add(components) {
         this.setState({
-            toasts:toasts
+            components:components
         })
-        setTimeout(() => {
-            toasts.forEach((iteam,index) => {
-                if (iteam.key = key) {
-                    toasts.splice(index, 1);
-                }
-            })
-            this.setState({
-                toasts:toasts
-            })
-        }, 2500);
+    }
+    /**
+     * 清除展示内容
+     */
+    clean() {
+        this.setState({
+            components:''
+        })
     }
 
     render() {
         return (<div id="my-componets">
-            {this.state.toasts.map((iteam => {
-                return (<Toast title={iteam.title} key={iteam.key}></Toast>);
-            }))}
+            {this.state.components}
         </div>)
     }
 }
-let ref;
-/**
- * 出初始化组建容器
- */
-function creatComponentsContainer() {
-    if (document.getElementById('my-componets') === null) {
-        let div = document.createElement('div');
-        document.body.appendChild(div);
-        ref = React.createRef()
-        ReactDOM.render(<ComponentsContainer ref={ref}></ComponentsContainer>, div);
-    }
-}
-creatComponentsContainer();
 
-export default {
-    toast: {
-        show(title,toastType) {
-            ref.current.add(title,toastType)
-        }
+let ref;
+let div;
+/**
+ * 
+ * @param {Object} ref 组件ref值
+ * @param {Object} div dom节点
+ */
+export default function creatComponentsContainer(id) {
+    if (document.getElementById(id) === null) {
+        div = document.createElement('div');
+        div.id = id;
+        document.body.appendChild(div);
+        ref = React.createRef();
     }
-};
+    ReactDOM.render(<ComponentsContainer ref={ref}></ComponentsContainer>, div);
+    return ref;
+}

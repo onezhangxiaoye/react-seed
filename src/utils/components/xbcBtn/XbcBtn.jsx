@@ -6,34 +6,48 @@ class XbcBtn extends Component{
     constructor() {
         super();
         this.state = {
-            xbcbtnClass:'xbcbtn'
+            xbcbtnClass: 'xbcbtn',
+            show:true
         }
         this.xbcBtnClick = this.xbcBtnClick.bind(this);
     }
 
     xbcBtnClick(event) {
-        const { onClick, data } = this.props;
-        console.log(data);
-        
         // 阻止合成事件间的冒泡
         event.stopPropagation();
-        if (onClick !== undefined) {
-            onClick(data);
-        }
         this.setState({
-            xbcbtnClass:'xbcbtn xbcbtn-animation-blue'
+            xbcbtnClass:'xbcbtn'
         })
+        const { onClick, data } = this.props;
+        let strClass = 'xbcbtn';
+        switch (this.state.xbcbtnClass) {
+            case 'xbcbtn':
+                strClass = 'xbcbtn xbcbtn-animation1';
+                break;
+            case 'xbcbtn xbcbtn-animation1':
+                strClass = 'xbcbtn xbcbtn-animation2';
+                break;
+            case 'xbcbtn xbcbtn-animation2':
+                strClass = 'xbcbtn xbcbtn-animation1';
+                break;
+            default:
+                break;
+        }
+        
         setTimeout(() => {
             this.setState({
-                xbcbtnClass:'xbcbtn'
+                xbcbtnClass:strClass
             })
-        }, 550);
+            if (onClick !== undefined) {
+                onClick(data);
+            }
+        }, 100);
     }
 
     render() {
 
         return (
-            <button
+            this.state.show && (<button
                 onMouseOver={this.props.onMouseOver}
                 onMouseLeave={this.props.onMouseLeave}
                 onFocus={this.props.onFocus}
@@ -43,7 +57,7 @@ class XbcBtn extends Component{
                 type="button"
             >
                 {this.props.content}
-            </button>
+            </button>)
         )
     }
 }

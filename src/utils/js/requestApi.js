@@ -4,7 +4,7 @@ import baseData from './baseData';
 //全局加载状态
 import loading from '../components/loading/loading';
 //全体提示内容
-import componentsContainer from '../components/componentsContainer/componentsContainer';
+import toast from '../components/toast/toast';
 
 /**
  * 使用自定义配置新建一个 axios 实例
@@ -20,24 +20,57 @@ var _axios = axios.create({
    * 
    * @param {String} url  请求路径
    * @param {Object} params  请求参数
+   * @param {Boolean} check  是否需要检测用户信息 默认需要检查
    */
-export function axiosPost(url, params) {
-
-    console.log('请求值---', url, params);
-    
+export function axiosPost(url, params, check = true) {
     return new Promise((resolve, reject) => {
-        _axios.post(url,objToFormData(params))
-            .then(result => {
+        const userInfo = localStorage.getItem('userInfo');
+        if (check && (userInfo !== null && userInfo !== '' && JSON.parse(userInfo).accessLevel > 5)){
+            toast.show('无访问权限');
+            reject({message:'无访问权限'});
+        } else {
+            console.log('请求值---', url, params);
 
-            console.log('响应值---', result);
-                
-            resolve(result.data);
-        }).catch(error => {
-            console.log(error);
-            loading.hide();
-            componentsContainer.toast.show('请求超时');
-            reject(error);
+            _axios.post(url,objToFormData(params))
+                .then(result => {
+    
+                console.log('响应值---', result);
+                    
+                resolve(result.data);
+            }).catch(error => {
+                console.log(error);
+                loading.hide();
+                toast.show('请求超时');
+                reject(error);
+            })
+        }
+    })
+}
+
+/**
+ * 使用自定义配置新建一个 axios 实例
+ */
+var _axiosGet = axios.create({
+    baseURL: baseData.baseURL,
+    timeout: baseData.timeout
+});
+
+  /** 封装的 axios post 请求
+   * 
+   * @param {String} url  请求路径
+   * @param {Object} params  请求参数
+   * @param {Boolean} check  是否需要检测用户信息 默认需要检查
+   */
+export function axiosGet(url) {
+    return new Promise((resolve, reject) => {
+        // 为给定 ID 的 user 创建请求
+        axios.get(url)
+        .then(function (response) {
+            resolve(response);
         })
+        .catch(function (error) {
+            reject(error);
+        });
     })
 }
 
@@ -76,7 +109,7 @@ var axiosTest = axios.create({
             resolve(result.data);
         }).catch(error => {
             loading.hide();
-            componentsContainer.toast.show('请求超时');
+            toast.show('请求超时');
             reject(error);
         })
     })

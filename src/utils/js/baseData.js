@@ -17,9 +17,15 @@ export default {
         //      http://192.168.1.158:9000/img/
         //      http://www.zhangxiaoye.top:9000/img/imgData/'
         // imgPath:'http://www.zhangxiaoye.top:9000/img/imgData/',
-        imgPath:'http://45.40.196.53:9000/img/imgData/',
+        //腾讯服务器 图片地址
+        // imgPath:'http://45.40.196.53:9000/img/imgData/',
+        //阿里服务器 图片地址
+        imgPath:'http://47.105.161.197:9000/img/',
         // imgPath:'http://192.168.1.158:9000/img/',
 }
+/**
+ * 获取当前系统IP
+ */
 function getIP() {
         return 'http://' + window.location.hostname + ':8123';
 }

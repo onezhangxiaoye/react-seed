@@ -10,10 +10,18 @@ class XbcRadio extends Component{
     constructor() {
         super();
         this.state = {
-            radio:-1 //默认选择第一个
+            radio:0 //默认选择第一个
         }
     }
-
+    componentDidMount() {
+        this.props.data.forEach((item,index) => {
+            if (item.value === '1') {
+                this.setState({
+                    radio:index
+                })
+            }
+        })
+    }
     onChange(e,index) {
         if (this.props.onChange !== undefined) {
             this.setState({ radio: index });
@@ -26,11 +34,6 @@ class XbcRadio extends Component{
         let arr = [];
         const data = this.props.data
         data.forEach((element, index) => {
-            if (element.checked && this.state.radio === -1) {
-                this.setState({
-                    radio:index
-                })
-            }
             arr.push(<div key={'redio_' + index}>
                 <div className="radio-title">{element.title}</div>
                 <input

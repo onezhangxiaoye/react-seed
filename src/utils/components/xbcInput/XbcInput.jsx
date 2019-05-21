@@ -23,7 +23,7 @@ class XbcInput extends Component{
 
 
     render() {
-        const {type,choose,title,placeholder,name,value} = this.props
+        const {type = 'text',choose,title,placeholder,name = 'und',value = ''} = this.props
         return (
             <div className="xbc-input" style={type === 'hidden' ? {display:'none'} : {}}>
                 <div className="title" >{choose && (<font>*</font>)}{title}:</div>
@@ -31,8 +31,8 @@ class XbcInput extends Component{
                     <input
                         defaultValue={value}
                         placeholder={placeholder}
-                        type={type === undefined ? 'text' : type }
-                        name={name === undefined ? 'und' : name }
+                        type={type}
+                        name={name}
                         onChange={this.onChange}
                     />
                 </div>

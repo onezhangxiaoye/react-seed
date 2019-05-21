@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import XbcBtn from '../utils/components/xbcBtn/XbcBtn'
 import { axiosPost } from '../utils/js/requestApi';
 //全体提示内容
-import componentsContainer from '../utils/components/componentsContainer/componentsContainer';
+import toast from '../utils/components/toast/toast';
 //全局加载状态
 import loading from '../utils/components/loading/loading';
 import '../utils/components/xbcTable/XbcTable';
@@ -125,11 +125,11 @@ class AddUrl_ extends Component{
 function addUrl(data) {
     const { id, to, name, tagFatherId, number, hidden,type } = data;
     if (to === undefined || to === '') {
-        componentsContainer.toast.show('配置路径不能为空');
+        toast.show('配置路径不能为空');
         return;
     }
     if (name === undefined || name === '') {
-        componentsContainer.toast.show('配置路径名称不能为空');
+        toast.show('配置路径名称不能为空');
         return;
     }
     loading.show();
@@ -151,12 +151,14 @@ function addUrl(data) {
         loading.hide();
         if (result.message === 'success') {
             if (id === undefined) {
-                componentsContainer.toast.show('添加成功');
+                toast.show('添加成功');
 
             } else {
-                componentsContainer.toast.show('修改成功');
+                toast.show('修改成功');
             }
         }
+    }).catch(res => {
+        loading.hide();
     })
     }
 

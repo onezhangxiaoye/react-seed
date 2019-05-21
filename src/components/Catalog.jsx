@@ -104,7 +104,7 @@ const initData = () => {
     // 异步请求 导航栏数据
     return {
         type: 'setNav',
-        payload:axiosPost('UrlController/selectAllData')
+        payload:axiosPost('UrlController/selectAllData',{},false)
     };
 }
   

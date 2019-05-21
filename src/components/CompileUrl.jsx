@@ -15,6 +15,15 @@ class CompileUrl extends Component{
         this.confirm = this.confirm.bind(this);
     }
 
+    componentDidMount() {
+        if (this.state === null) {
+            this.setState({
+                ...this.props.data.param,
+                type:this.props.data.type
+            })
+        }
+    }
+
     /**输入框 输入时 时时更新参数
      * 
      * @param {Object} event 
@@ -35,13 +44,7 @@ class CompileUrl extends Component{
     }
 
     render() {
-        const {param:{ id = 0, to = '',name = '',tagFatherId,number,hidden},type } = this.props.data;
-        if (this.state === null) {
-            this.setState({
-                ...this.props.data.param,
-                type:type
-            })
-        }
+        const { id = 0, to = '',name = '',tagFatherId,number,hidden} = this.props.data.param;
 
         let radioarr = [
             {

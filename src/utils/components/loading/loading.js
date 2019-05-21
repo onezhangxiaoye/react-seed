@@ -1,7 +1,7 @@
-import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import './loading.styl';
 import loading from './loading.png';
+import popup from '../popup/Popup'
 
 class Loading extends Component{
     render() {
@@ -14,14 +14,11 @@ class Loading extends Component{
     }
 }
 
-const div = document.createElement('div');
-
 export default {
-    show() {
-        document.body.appendChild(div);
-        ReactDOM.render(<Loading title="加载中。。。" />, div);
+    show(title = '加载中...') {
+        popup.show(<Loading title={title} />, {}, false, 1);
     },
     hide() {
-        ReactDOM.unmountComponentAtNode(div)
+        popup.hide(true)
     }
 }

@@ -7,10 +7,12 @@ import loading from '../utils/components/loading/loading';
 //全局弹出层
 import popup from '../utils/components/popup/Popup';
 //全体提示内容
-import componentsContainer from '../utils/components/componentsContainer/componentsContainer';
+import toast from '../utils/components/toast/toast';
 import { axiosPostTest } from '../utils/js/requestApi';
 import store from '../utils/store/store';
 import XbcBtn from '../utils/components/xbcBtn/XbcBtn'
+import { axiosGet } from '../utils/js/requestApi';
+import XbcInput from '../utils/components/xbcInput/XbcInput'
 
 import Counter from './Counter';
 import GlobalRedux from './GlobalRedux';
@@ -25,24 +27,59 @@ class Test3 extends Component{
         this.state = {
             testValue: 1,
             testText: 1,
-            items: ['hello', 'world', 'click', 'me']
+            messageLists:[]
         }
         this.requestTest = this.requestTest.bind(this);
         this.testXbcBtn = this.testXbcBtn.bind(this);
         this.loadingTest = this.loadingTest.bind(this);
         this.storeTest = this.storeTest.bind(this);
         this.getStoreTest = this.getStoreTest.bind(this);
+        this.testWebSocket = this.testWebSocket.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.createWebSocket = this.createWebSocket.bind(this);
     }
-
+    componentDidMount() {
+        mySocket = this.createWebSocket();
+    }
+    createWebSocket() {
+        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        const url = 'ws://' + window.location.hostname + ':8123/websocket/' + (userInfo === null ? '' : userInfo.id)
+        this.setState({
+            pushUserId:(userInfo === null ? '' : userInfo.id)
+        })
+        
+        let Socket = new WebSocket(url);
+        Socket.onopen = (e) => {
+            console.log('连接建立时触发---', e);
+        };
+        Socket.onmessage = (e) => {
+            console.log('客户端接收服务端数据时触发---', e);
+            const data = JSON.parse(e.data);
+            console.log(data);
+            
+            if (data.type === 'push') {
+                let { messageLists } = this.state;
+                messageLists.push(data.data);
+                this.setState({
+                    messageLists:messageLists
+                })
+            }
+        };
+        Socket.onerror = (e) => {
+            console.log('通信发生错误时触发---', e);
+        };
+        Socket.onclose = (e) => {
+            Socket = null;
+            console.log('连接关闭时触发---', e);
+        };
+        return Socket;
+    }
     requestTest() {
-        loading.show();
-        this.serverRequest = axiosPostTest(
-            'http://192.168.137.202:8080/customer/reports/driverReport/2018',
-            "data={phone:'18900000000'}"
-        ).then(result => {
-            loading.hide();
-            console.log(result);
-            componentsContainer.toast.show(result.message);
+        axiosGet('http://localhost:8123/checkcenter/socket/push').then(result => {
+            
+        }).catch(res => {
+            console.log(res);
+            
         })
     }
 
@@ -50,7 +87,7 @@ class Test3 extends Component{
         let testValue = this.state.testValue;
 
         popup.show(
-            <XbcBtn content="测试按钮组件" ></XbcBtn>,
+            <XbcBtn content={'点击弹出弹出层' + this.state.testText+1} onClick={this.requestTest}></XbcBtn>,
             {
                 justifyContent: 'flex-end'
             }
@@ -77,33 +114,59 @@ class Test3 extends Component{
         console.log(store.getState().saveData);
     }
     checkBrowser() {
-        componentsContainer.toast.show('toast测试');
-        
-        
-        // var msg=""; 
-        // msg += "浏览器名称:" + navigator.appName + "\n";
-        // msg += "浏览器版本:" + navigator.appVersion + "\n";
-        // msg += "浏览器代码:" + navigator.appCodeName + "\n";
-        // alert(msg);
+        toast.show('toast测试');
+    }
+    testWebSocket() {
+        console.log('testWebSocket----------');
+
+        const { message, pullUserId,pushUserId } = this.state;
+        if (!pullUserId) {
+            toast.show('请输入用户id');
+            return;
+        }
+        if (!message) {
+            toast.show('请输入要发送得消息');
+            return;
+        }
+
+        try {
+            if (!mySocket || mySocket.readyState !== 1) {
+                mySocket = this.createWebSocket();
+            }
+            const sendMessage = {
+                pullUserId:pullUserId,
+                pushUserId:pushUserId,
+                message:message,
+                timestamp:new Date().getTime()
+            }
+            console.log('sendMessage---',sendMessage);
+            
+            mySocket.send(JSON.stringify(sendMessage));
+            let { messageLists } = this.state;
+            messageLists.push(sendMessage);
+            this.setState({
+                messageLists:messageLists
+            })
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    /**输入框 输入时 时时更新参数
+     * 
+     * @param {Object} event 
+     */
+    onChange(event) {
+        let param = {};
+        param[event.target.name] = event.target.value;
+        this.setState(param);
     }
 
     render() {
-        const testli = [
-            {content:'a',class:'a'},
-            {content:'b',class:'b'},
-            {content:'c',class:'c'},
-            {content:'d',class:'d'},
-            {content:'e',class:'e'},
-        ]
-        let items = <div key={this.state.testText} className="test-red">{this.state.testText}</div>
+        const { messageLists, pushUserId = -1 } = this.state;
         return (
             <div className="test3">
                 <XbcBtn
-                    content="测试访问数据库"
-                    onClick={this.requestTest}
-                ></XbcBtn>
-                <XbcBtn
-                    content="点击弹出弹出层"
+                    content={'点击弹出弹出层' + this.state.testText}
                     onClick={this.testXbcBtn}
                 ></XbcBtn>
                 <XbcBtn
@@ -122,28 +185,35 @@ class Test3 extends Component{
                     content="toast测试"
                     onClick={this.checkBrowser}
                 ></XbcBtn>
+                <XbcBtn
+                    content="WebSocket向服务器发送消息实验"
+                    onClick={this.testWebSocket}
+                ></XbcBtn>
+                <XbcBtn
+                    content="WebSocket关闭连接"
+                    onClick={() => {mySocket.close()}}
+                ></XbcBtn>
+                <XbcBtn
+                    content="WebSocket推送"
+                    onClick={this.requestTest}
+                ></XbcBtn>
                 <Counter></Counter>
+
+                <XbcInput onChange={this.onChange} title="好友id" name="pullUserId" type='number'></XbcInput>
+                <XbcInput onChange={this.onChange} title="写消息" name="message"></XbcInput>
+
                 <GlobalRedux></GlobalRedux>
 
-                <ul>
-                    {testli.map((iteam, index) => {
-                        return (<li key={iteam.class + '_' + index} className={iteam.class + '_' + index}>{iteam.content}</li>);
+                <ul className="messages-ul">
+                    {messageLists.map((iteam, index) => {
+                        return (<li key={'messageList_' + index} className={iteam.pushUserId === pushUserId ? 'left-li' : 'right-li'}>{iteam.message}</li>);
                     })}
                 </ul>
                 
-                <div className="move"></div>
-                <ReactCSSTransitionGroup
-                    component="div"
-                    className="react-container"
-                    transitionName="example"
-                    transitionEnterTimeout={1000}
-                    transitionLeaveTimeout={1000}
-                >
-                    {items}
-                </ReactCSSTransitionGroup>
+                <div className="move" style={{textAlign:'left'}}></div>
             </div >
         )
     }
 }
-
+var mySocket;
 export default Test3;

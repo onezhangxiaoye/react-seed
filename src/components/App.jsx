@@ -11,21 +11,11 @@ import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
-    this.routers = props.routers;
-  }
-
   render() {
-    const { location } = this.props;
-    
+    const { location, routers } = this.props;
     const appRouter = <div key={location.pathname} className="appRouter">
-              {this.routers.map((route, i) => (
-                  location.pathname === route.path ? <XbcRouter
-                  path={route.path}
-                  key={i}
-                  component={route.component}
-                /> : null
+              {routers.map((route,i) => (
+                <XbcRouter key={i} {...route} />
               ))}</div>
 
     return (

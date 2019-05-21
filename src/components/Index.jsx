@@ -8,7 +8,7 @@ import { axiosPost } from '../utils/js/requestApi';
 //全局加载状态
 import loading from '../utils/components/loading/loading';
 //全体提示内容
-import componentsContainer from '../utils/components/componentsContainer/componentsContainer';
+import toast from '../utils/components/toast/toast';
 import history from "../utils/components/xbcRouter/history";
 
 class Index extends Component{
@@ -28,7 +28,7 @@ class Index extends Component{
         let focus = this.state.focus;
         let name = this.state.name;
         if (name === '') {
-            componentsContainer.toast.show('用户名不能为空');
+            toast.show('用户名不能为空');
             focus[0] = 'login-input';
             focus[1] = '';
             this.setState({focus:focus});
@@ -36,7 +36,7 @@ class Index extends Component{
         }
         let password = this.state.password;
         if (password === '') {
-            componentsContainer.toast.show('密码不能为空');
+            toast.show('密码不能为空');
             focus[0] = '';
             focus[1] = 'login-input';
             this.setState({focus:focus});
@@ -46,22 +46,19 @@ class Index extends Component{
         this.serverRequest = axiosPost('UserController/selectByUserName', {
             name: name,
             password: password
-        }).then(result => {
+        },false).then(result => {
             loading.hide();
             if (result.message === 'success') {
-                componentsContainer.toast.show('登陆成功');
-                localStorage.setItem('userInfo', JSON.stringify({
-                    name:result.data.name,
-                    password:result.data.password,
-                }))
+                toast.show('登陆成功');
+                localStorage.setItem('userInfo', JSON.stringify(result.data))
                 localStorage.removeItem("nav");
                 setTimeout(() => {
                     // 路由跳转
-                    history.push('/app/content');
-                }, 3000);
+                    history.push('/app');
+                }, 500);
             } else {
                 localStorage.setItem('userInfo', '')
-                componentsContainer.toast.show(result.message);
+                toast.show(result.message);
             }
         })
     }
@@ -87,6 +84,7 @@ class Index extends Component{
                         <div>
                             <p>Login to our site</p>
                             <p className='notice'>Enter your username and password to log on:</p>
+                            <p className='notice' style={{color:'red'}}>游客模式：username=tourist；password=tourist</p>
                         </div>
                         <div>
                             <img src={suo} alt=""/>

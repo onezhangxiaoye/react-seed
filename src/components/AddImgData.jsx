@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { axiosPost } from '../utils/js/requestApi';
 import fileUpload from '../assets/fileUpload.svg';
 //全体提示内容
-import componentsContainer from '../utils/components/componentsContainer/componentsContainer';
+import toast from '../utils/components/toast/toast';
 //全局加载状态
 import loading from '../utils/components/loading/loading';
 //引入基础数据参数
@@ -45,22 +45,22 @@ class AddImgData extends Component{
     handleSubmit() {
         let imgName = this.state.imgName;
         if (imgName === '') {
-            componentsContainer.toast.show('请输入图片名称');
+            toast.show('请输入图片名称');
             return;
         }
         let introduce = this.state.introduce;
         if (introduce === '') {
-            componentsContainer.toast.show('请输入图片介绍');
+            toast.show('请输入图片介绍');
             return;
         }
         let comment = this.state.comment;
         if (comment === '') {
-            componentsContainer.toast.show('请输入图片评论信息');
+            toast.show('请输入图片评论信息');
             return;
         }
         let file = this.state.inputImgs[0];
         if (file.length === 0) {
-            componentsContainer.toast.show('必须选择上传得图片');
+            toast.show('必须选择上传得图片');
             return;
         }
         loading.show();
@@ -73,7 +73,7 @@ class AddImgData extends Component{
             loading.hide();
             console.log(result);
             if (result.message === 'success') {
-                componentsContainer.toast.show('添加图片成功');
+                toast.show('添加图片成功');
             }
         })
     }
@@ -94,7 +94,7 @@ class AddImgData extends Component{
         const files = event.target.files[0];
         const fileName = files.name;
         if (imgPostfix.indexOf(fileName.substring(fileName.lastIndexOf('.'))) === -1) {
-            componentsContainer.toast.show('文件格式错误');
+            toast.show('文件格式错误');
             return;
         }
         

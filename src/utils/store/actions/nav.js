@@ -47,7 +47,7 @@ export default (state = initialState, action) => {
           nav:action.payload.data,
           catalog: {
             //当前导航栏 的数据状态 用于在用户和界面交互时进行修改
-            nav:state.catalog.nav.length === 0 ? action.payload.data : state.catalog.nav,
+            nav:action.payload.data,
             //当前路由pathname 默认为首页
             pathname: state.catalog.pathname
           },

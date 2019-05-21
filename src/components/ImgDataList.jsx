@@ -11,7 +11,7 @@ class ImgDataList extends Component{
     constructor() {
         super();
         this.state = {
-            dataList:''
+            dataList:[]
         }
         this.yulanImg = this.yulanImg.bind(this);
     }
@@ -30,7 +30,7 @@ class ImgDataList extends Component{
    * 可以通过 componentDidMount 方法中的 Ajax 来获取，当从服务端获取数据时可以将数据存储在 state 中，再用 this.setState 方法重新渲染 UI
    */
   componentDidMount() {
-      this.serverRequest = axiosPost('MyController/selectAllImg', { id: 40 }).then(result => {
+      this.serverRequest = axiosPost('MyController/selectAllImg', { id: 40 },false).then(result => {
         // console.log(result);
         let arr = [];
         result.data.forEach((data,index) => {
@@ -50,7 +50,9 @@ class ImgDataList extends Component{
         this.setState({
             dataList:arr
       })
-    }) 
+      }).catch(res => {
+        console.log(res);
+    })
   }
 
     render() {
